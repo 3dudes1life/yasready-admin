@@ -1,0 +1,24 @@
+YASREADY ADMIN — BUSINESS 360 BUILD 5.3 — LIFECYCLE INTELLIGENCE
+
+DESTINATION: ADMIN GITHUB ONLY
+DO NOT UPLOAD TO CUSTOMER GITHUB.
+
+Built from the branded Admin Business 360 5.2.
+
+NEW:
+- Admin understands Customer 4.6 entry_path: starting vs existing
+- business_stage: prelaunch / new / operating / growing / established
+- primary goal surfaced throughout Business 360
+- known vs missing metric coverage
+- Business 360 Lifecycle tab
+- Business Intelligence context mirrors Customer 4.7
+- Businesses table now shows path/stage/goal/metric gaps
+- filters for entry path and business stage
+- Support context now shows path, stage, goal, and missing metrics
+- Product Analytics lifecycle mix
+- shared API architecture notes updated for lifecycle fields
+
+PRE-CLOUDFLARE:
+All new counts and lifecycle records are mock/local admin data.
+No fake production connection was added.
+Customer 4.7 is NOT contained in this ZIP.
