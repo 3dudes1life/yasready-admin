@@ -98,11 +98,103 @@ main{padding:30px;max-width:1500px;width:100%;margin:auto}.eyebrow{font-size:10p
 @media(max-width:900px){.contractGrid{grid-template-columns:1fr}.apiMap{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.apiMap{grid-template-columns:1fr}}
 
+
+/* === BUSINESS 360 BUILD 5.1 — BROWSER / IPAD COMMAND CENTER === */
+.modeToggle{border:1px solid #dddde2;background:#fff;border-radius:11px;padding:9px 11px;font-size:11px;font-weight:850;cursor:pointer;white-space:nowrap}
+.modeToggle.active{background:#171719;color:#fff;border-color:#171719}
+.ipadHint{display:none}
+
+/* General touch-safe behavior */
+body.ipadMode button,body.ipadMode select,body.ipadMode input,body.ipadMode textarea{touch-action:manipulation}
+body.ipadMode button{min-height:44px}
+body.ipadMode .btn{padding:12px 14px}
+body.ipadMode .top{height:74px;padding:0 18px}
+body.ipadMode .layout{grid-template-columns:190px minmax(0,1fr)}
+body.ipadMode aside{top:74px;height:calc(100vh - 74px);padding-top:14px}
+body.ipadMode main{padding:22px 24px;max-width:none}
+body.ipadMode .nav button{padding:13px 12px;font-size:13px}
+body.ipadMode .metric,body.ipadMode .card{border-radius:18px;padding:18px}
+body.ipadMode .grid4{grid-template-columns:repeat(2,1fr)}
+body.ipadMode .grid3{grid-template-columns:repeat(2,1fr)}
+body.ipadMode .kpiStrip{grid-template-columns:repeat(2,1fr)}
+body.ipadMode .healthCircle{width:62px!important;height:62px!important;min-width:62px!important;min-height:62px!important}
+body.ipadMode .healthScore{grid-template-columns:62px minmax(0,1fr)}
+body.ipadMode .toolbar{gap:10px}
+body.ipadMode .toolbar input,body.ipadMode .toolbar select{min-height:44px;font-size:13px}
+body.ipadMode .search input{min-height:44px}
+body.ipadMode .savedViewBar button{padding:10px 12px;min-height:44px}
+body.ipadMode .tabs button{padding:11px 13px;min-height:44px}
+body.ipadMode .row{padding:14px 0}
+body.ipadMode .table th,body.ipadMode .table td{padding:15px 14px;font-size:13px}
+body.ipadMode .pill{padding:7px 9px}
+body.ipadMode .commandItem{padding:14px}
+body.ipadMode .globalSearch{display:none}
+body.ipadMode .ipadHint{display:inline-flex;padding:6px 8px;background:#f1efff;color:#5d49dc;border-radius:999px;font-size:9px;font-weight:900}
+
+/* iPad Support Command Desk */
+body.ipadMode .inbox{
+  display:grid;
+  grid-template-columns:260px minmax(0,1fr) 290px;
+  min-height:calc(100vh - 180px);
+}
+body.ipadMode .threads{border-right:1px solid var(--line);max-height:none}
+body.ipadMode .thread{padding:16px}
+body.ipadMode .chat{min-width:0}
+body.ipadMode .messages{padding:18px}
+body.ipadMode .bubble{max-width:82%;font-size:13px;padding:12px 14px}
+body.ipadMode .composer{grid-template-columns:minmax(0,1fr) auto;padding:12px;position:sticky;bottom:0;background:#fff}
+body.ipadMode .composer textarea{font-size:16px;min-height:58px}
+body.ipadMode .supportContextPane{display:block!important;border-left:1px solid var(--line);background:#fafafa;padding:16px;overflow:auto}
+.supportContextPane{display:none}
+.contextMini{background:#fff;border:1px solid #e8e8ec;border-radius:14px;padding:13px;margin-bottom:10px}
+.contextMini span{display:block;font-size:9px;color:#888;text-transform:uppercase;letter-spacing:.06em;font-weight:850}
+.contextMini strong{display:block;font-size:15px;margin-top:5px}
+
+/* iPad top action dock */
+.ipadDock{display:none}
+body.ipadMode .ipadDock{
+  display:flex;
+  position:sticky;
+  top:74px;
+  z-index:15;
+  gap:8px;
+  padding:10px 18px;
+  margin:-22px -24px 18px;
+  background:rgba(245,245,247,.94);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid #e3e3e7;
+  overflow:auto;
+}
+body.ipadMode .ipadDock button{
+  white-space:nowrap;border:1px solid #ddd;background:#fff;border-radius:999px;padding:10px 12px;font-size:11px;font-weight:850
+}
+body.ipadMode .ipadDock button.attn{background:#171719;color:#fff;border-color:#171719}
+
+/* Portrait iPad */
+@media (max-width:900px){
+  body.ipadMode .layout{grid-template-columns:1fr}
+  body.ipadMode aside{display:none}
+  body.ipadMode main{padding:18px}
+  body.ipadMode .ipadDock{top:74px;margin:-18px -18px 16px;padding-left:14px;padding-right:14px}
+  body.ipadMode .inbox{grid-template-columns:220px minmax(0,1fr)}
+  body.ipadMode .supportContextPane{display:none!important}
+  body.ipadMode .grid4,body.ipadMode .grid3,body.ipadMode .kpiStrip{grid-template-columns:1fr 1fr}
+}
+@media (max-width:650px){
+  body.ipadMode .grid4,body.ipadMode .grid3,body.ipadMode .kpiStrip{grid-template-columns:1fr}
+  body.ipadMode .inbox{grid-template-columns:1fr}
+  body.ipadMode .threads{max-height:260px;border-right:0;border-bottom:1px solid var(--line)}
+}
+
+/* Prevent hover-only affordance dependence in iPad mode */
+body.ipadMode .clickrow{cursor:pointer}
+body.ipadMode .clickrow:active,body.ipadMode .thread:active,body.ipadMode .commandItem:active{background:#f2f0ff}
+
 </style>
 </head>
 <body><div class="app">
-<div id="offlineBanner" class="offlineBanner">Offline simulation active — AdminAPI is returning local mock data.</div><header class="top"><div class="brand">YasReady<span>.</span></div><div class="adminPill">ADMIN · BUSINESS 360 BUILD 5</div>
-<div class="topRight"><div class="globalSearch"><input id="globalSearchInput" placeholder="Search businesses, customers, support…  ⌘K"><span class="searchIcon">⌕</span></div><button class="notifyBtn" id="notifyBtn">🔔<span class="notifyDot"></span></button><select id="roleSelect" class="secondary btn"><option>Owner</option><option>Admin</option><option>Support</option><option>Read Only</option></select><div class="avatar">W</div></div></header>
+<div id="offlineBanner" class="offlineBanner">Offline simulation active — AdminAPI is returning local mock data.</div><header class="top"><div class="brand">YasReady<span>.</span></div><div class="adminPill">ADMIN · BUSINESS 360 BUILD 5.1</div>
+<div class="topRight"><span class="ipadHint">IPAD COMMAND CENTER</span><button class="modeToggle" id="ipadModeToggle">iPad Mode</button><div class="globalSearch"><input id="globalSearchInput" placeholder="Search businesses, customers, support…  ⌘K"><span class="searchIcon">⌕</span></div><button class="notifyBtn" id="notifyBtn">🔔<span class="notifyDot"></span></button><select id="roleSelect" class="secondary btn"><option>Owner</option><option>Admin</option><option>Support</option><option>Read Only</option></select><div class="avatar">W</div></div></header>
 <div id="notifyPanel" class="notifyPanel hidden"></div>
 <div id="commandBackdrop" class="commandBackdrop hidden"><div class="commandBox"><input id="commandInput" placeholder="Jump anywhere in YasReady Admin…"><div id="commandResults" class="commandResults"></div></div></div><div class="layout"><aside><div class="nav">
 <div class="navTitle">Command Center</div>
@@ -111,7 +203,7 @@ main{padding:30px;max-width:1500px;width:100%;margin:auto}.eyebrow{font-size:10p
 <div class="navTitle">Customer Success</div><button data-view="support">Support Inbox <span class="count">4</span></button>
 <div class="navTitle">Intelligence</div><button data-view="analytics">Product Analytics</button><button data-view="success">Customer Success</button><button data-view="feedback">Feedback & Requests</button><button data-view="health">System Health</button>
 <div class="navTitle">Admin</div><button data-view="content">Announcements</button><button data-view="operations">Operations</button><button data-view="architecture">API Architecture</button><button data-view="settings">Settings</button>
-</div></aside><main id="content"></main></div></div>
+</div></aside><main><div id="ipadDock" class="ipadDock"><button class="attn" data-dock="overview">Needs Attention</button><button data-dock="support">Support</button><button data-dock="businesses">Businesses</button><button data-dock="revenue">Revenue</button><button data-dock="success">Customer Success</button><button data-dock="operations">Operations</button></div><div id="content"></div></main></div></div>
 <script>
 const money=n=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n);
 const plans={free:"Free",run:"$9.99 Run",connect:"$19.99 Connect"};
@@ -244,8 +336,17 @@ function revenue(){content.innerHTML=`<span class="eyebrow">Revenue</span><h1>Mo
 <div class="sectionHead"><h2>Failed-payment recovery</h2></div><section class="card"><div class="dunningList">${adminState.dunning.map(d=>`<div class="dunningRow"><div><strong>${d.business}</strong><span>${money(d.amount)} · ${d.status}</span></div><span class="attempt">Attempt ${d.attempt}</span><button class="btn secondary" data-retry="${d.business}">Mock retry</button></div>`).join("")}</div></section>
 <div class="sectionHead"><h2>Recent transactions</h2><button class="btn secondary" id="exportRevenue" data-requires="export">Export CSV</button></div><div class="tableWrap"><table class="table"><thead><tr><th>Date</th><th>Business</th><th>Event</th><th>Amount</th><th>Status</th></tr></thead><tbody>${[["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"],["Aug 15","Northside Mobile Detail","Run renewal",9.99,"Paid"],["Aug 15","Glow Reiki","Upgrade attempt",9.99,"Failed"]].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>$${r[3].toFixed(2)}</td><td><span class="pill ${r[4]==="Paid"?"good":"bad"}">${r[4]}</span></td></tr>`).join("")}</tbody></table></div>`;document.getElementById("exportRevenue").onclick=()=>{csvDownload("yasready-revenue.csv",[["Date","Business","Event","Amount","Status"],["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"]]);audit("Exported revenue CSV")};document.querySelectorAll("[data-retry]").forEach(x=>x.onclick=()=>{const d=adminState.dunning.find(v=>v.business===x.dataset.retry);d.attempt++;d.status="Retry queued";saveAdmin();audit("Queued payment retry",d.business);revenue()})}
 function subscriptions(){content.innerHTML=`<span class="eyebrow">Subscriptions</span><h1>Plans & billing.</h1><div class="grid4">${metric("Free","88","68.7%")}${metric("$9.99 Run","24","18.8%")}${metric("$19.99 Connect","16","12.5%")}${metric("Churn","2.1%","Mock 30d")}</div>${tableBiz()}`;bindRows()}
-function support(){content.innerHTML=`<span class="eyebrow">Support</span><h1>Talk where the business lives.</h1><p class="sub">Customer context, statuses, internal workflow, and replies in one place.</p><div class="sectionHead"><div class="toolbar"><select id="supportStatus"><option>All statuses</option><option>New</option><option>Waiting on us</option><option>Waiting on customer</option><option>Resolved</option></select><button class="btn secondary" id="supportMacro">Insert macro</button></div><span class="pill warn">4 open</span></div><div class="inbox"><div class="threads">${threads.map(t=>`<div class="thread ${t.id===selectedThread.id?"active":""}" data-thread="${t.id}"><strong>${t.name}</strong><p>${t.subject}</p><small>${t.status} · ${t.time}</small></div>`).join("")}</div><div class="chat"><div class="chatHead"><strong>${selectedThread.name}</strong><br><small>${selectedThread.subject}</small><div style="margin-top:8px"><button class="btn ghost" id="openContext">Open Business 360</button><button class="btn ghost" id="resolveThread">Mark resolved</button></div></div><div class="messages">${selectedThread.messages.map(m=>`<div class="bubble ${m[0]==="admin"?"admin":""}">${m[1]}</div>`).join("")}</div><div class="composer"><textarea id="reply" placeholder="Reply to customer…"></textarea><button class="btn primary" id="sendReply" data-requires="support">Send</button></div></div></div>`;
-document.querySelectorAll("[data-thread]").forEach(x=>x.onclick=()=>{selectedThread=threads.find(t=>t.id==x.dataset.thread);support()});document.getElementById("openContext").onclick=()=>business360(businesses.find(b=>b.id===selectedThread.biz));document.getElementById("resolveThread").onclick=()=>{selectedThread.status="Resolved";audit("Resolved support thread",selectedThread.name);support()};document.getElementById("supportMacro").onclick=()=>{const pick=prompt("Choose macro:\n"+adminState.supportMacros.map((m,i)=>(i+1)+". "+m.name).join("\n"),"1");const m=adminState.supportMacros[(parseInt(pick)||1)-1];if(m)document.getElementById("reply").value=m.text;};document.getElementById("sendReply").onclick=()=>{const r=document.getElementById("reply");if(!r.value.trim())return;selectedThread.messages.push(["admin",r.value.trim()]);selectedThread.status="Waiting on customer";audit("Sent support reply",selectedThread.name);support()}}
+function support(){content.innerHTML=`<span class="eyebrow">Support</span><h1>Talk where the business lives.</h1><p class="sub">Customer context, statuses, internal workflow, and replies in one place.</p><div class="sectionHead"><div class="toolbar"><select id="supportStatus"><option>All statuses</option><option>New</option><option>Waiting on us</option><option>Waiting on customer</option><option>Resolved</option></select><button class="btn secondary" id="supportMacro">Insert macro</button></div><span class="pill warn">4 open</span></div><div class="inbox"><div class="threads">${threads.map(t=>`<div class="thread ${t.id===selectedThread.id?"active":""}" data-thread="${t.id}"><strong>${t.name}</strong><p>${t.subject}</p><small>${t.status} · ${t.time}</small></div>`).join("")}</div><div class="chat"><div class="chatHead"><strong>${selectedThread.name}</strong><br><small>${selectedThread.subject}</small><div style="margin-top:8px"><button class="btn ghost" id="openContext">Open Business 360</button><button class="btn ghost" id="resolveThread">Mark resolved</button></div></div><div class="messages">${selectedThread.messages.map(m=>`<div class="bubble ${m[0]==="admin"?"admin":""}">${m[1]}</div>`).join("")}</div><div class="composer"><textarea id="reply" placeholder="Reply to customer…"></textarea><button class="btn primary" id="sendReply" data-requires="support">Send</button></div></div><aside class="supportContextPane" id="supportContextPane">
+        <span class="eyebrow">Business context</span>
+        <h2 style="margin:7px 0 12px">${businesses.find(b=>b.id===selectedThread.biz)?.name||"Business"}</h2>
+        <div class="contextMini"><span>Plan</span><strong>${plans[businesses.find(b=>b.id===selectedThread.biz)?.plan]||"—"}</strong></div>
+        <div class="contextMini"><span>Readiness</span><strong>${businesses.find(b=>b.id===selectedThread.biz)?.ready||0}%</strong></div>
+        <div class="contextMini"><span>Revenue</span><strong>${money(businesses.find(b=>b.id===selectedThread.biz)?.revenue||0)}</strong></div>
+        <div class="contextMini"><span>Revenue goal</span><strong>${money(businesses.find(b=>b.id===selectedThread.biz)?.goal||0)}</strong></div>
+        <div class="contextMini"><span>KPIs available</span><strong>${businesses.find(b=>b.id===selectedThread.biz)?.kpis||0}</strong></div>
+        <button class="btn primary" id="openContextPane" style="width:100%;margin-top:6px">Open Business 360</button>
+        </aside></div>`;
+document.querySelectorAll("[data-thread]").forEach(x=>x.onclick=()=>{selectedThread=threads.find(t=>t.id==x.dataset.thread);support()});document.getElementById("openContext").onclick=()=>business360(businesses.find(b=>b.id===selectedThread.biz));const ocp=document.getElementById("openContextPane");if(ocp)ocp.onclick=()=>business360(businesses.find(b=>b.id===selectedThread.biz));document.getElementById("resolveThread").onclick=()=>{selectedThread.status="Resolved";audit("Resolved support thread",selectedThread.name);support()};document.getElementById("supportMacro").onclick=()=>{const pick=prompt("Choose macro:\n"+adminState.supportMacros.map((m,i)=>(i+1)+". "+m.name).join("\n"),"1");const m=adminState.supportMacros[(parseInt(pick)||1)-1];if(m)document.getElementById("reply").value=m.text;};document.getElementById("sendReply").onclick=()=>{const r=document.getElementById("reply");if(!r.value.trim())return;selectedThread.messages.push(["admin",r.value.trim()]);selectedThread.status="Waiting on customer";audit("Sent support reply",selectedThread.name);support()}}
 function analytics(){content.innerHTML=`<span class="eyebrow">Product Intelligence</span><h1>How people use YasReady.</h1><div class="grid4">${metric("Onboarding complete","82%","+4.2 pts")}${metric("Monthly check-in","47%","Paid users")}${metric("Today weekly use","63%","Active businesses")}${metric("KPI engagement","71%","Run + Connect")}</div><div class="grid2"><section class="card"><h2>Setup funnel</h2>${[["Business basics",96],["Offer + price",88],["Costs + goal",76],["Launch / performance",62]].map(x=>`<div class="bar"><label>${x[0]}</label><div class="track"><i style="width:${x[1]}%"></i></div><strong>${x[1]}%</strong></div>`).join("")}</section><section class="card"><h2>Feature usage</h2>${[["Today",63],["KPIs",71],["Financial Model",54],["Excel export",29],["Business 101",41]].map(x=>`<div class="bar"><label>${x[0]}</label><div class="track"><i style="width:${x[1]}%"></i></div><strong>${x[1]}%</strong></div>`).join("")}</section></div>
 <section class="card" style="margin-top:14px"><h2>Retention cohorts</h2><p class="sub">Mock cohort surface so we know exactly what we want to persist and query later.</p><div class="cohort"><div class="head">Cohort</div><div class="head">W0</div><div class="head">W1</div><div class="head">W2</div><div class="head hideC">W3</div><div class="head hideC">W4</div><div class="head hideC">W5</div>${[["Jul 6",100,71,62,55,49,46],["Jul 13",100,74,65,57,52,0],["Jul 20",100,76,68,61,0,0]].map(r=>r.map((v,i)=>`<div class="${i&&v>=70?"heat4":i&&v>=60?"heat3":i&&v>=50?"heat2":i&&v?"heat1":""} ${i>3?"hideC":""}">${i?v+"%":v}</div>`).join("")).join("")}</div></section>`}
 
@@ -305,7 +406,7 @@ function architecture(){content.innerHTML=`<span class="eyebrow">API-Ready Archi
 ].map(r=>`<tr><td>${r[0]}</td>${r.slice(1).map(v=>`<td class="${v==="yes"?"permYes":v==="limited"?"permLimited":"permNo"}">${v==="yes"?"✓":v==="limited"?"Limited":"—"}</td>`).join("")}</tr>`).join("")}</tbody></table></div></section>`;
 const renderContract=name=>{document.querySelectorAll("[data-contract]").forEach(x=>x.classList.toggle("active",x.dataset.contract===name));document.getElementById("contractJson").innerHTML=syntaxHighlight(contractSamples[name]())};renderContract("Business 360");document.querySelectorAll("[data-contract]").forEach(x=>x.onclick=()=>renderContract(x.dataset.contract));document.querySelectorAll("[data-mode]").forEach(x=>x.onclick=()=>{const m=x.dataset.mode;apiState.latency=m==="slow"?1400:120;setApiMode(m);architecture()});document.getElementById("failNextApi").onclick=()=>{simulateNextApiFailure();alert("The next AdminAPI request will fail so you can test the error state.")};document.getElementById("exportContract5").onclick=()=>{const blob=new Blob([JSON.stringify(buildDataContract(),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="yasready-shared-data-contract-v0.2.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),400);audit("Exported shared data contract")}}
 
-function settings(){content.innerHTML=`<span class="eyebrow">Admin Settings</span><h1>Control the office.</h1>
+function settings(){content.innerHTML=`<span class="eyebrow">Admin Settings</span><h1>Control the office.</h1><div class="notice"><strong>Browser / iPad Command Center:</strong> Use the iPad Mode button in the top-right to switch the same admin between full desktop and touch-optimized iPad layouts. Your choice is remembered on this device.</div>
 <div class="grid2"><section class="card"><h2>Admin role simulator</h2><p class="sub">Conceptual access model before real authentication exists.</p><div class="roleGrid"><div class="roleCard"><strong>Owner</strong><ul><li>Everything</li><li>Billing</li><li>Roles</li></ul></div><div class="roleCard"><strong>Admin</strong><ul><li>Customers</li><li>Business 360</li><li>Support</li></ul></div><div class="roleCard"><strong>Support</strong><ul><li>Support</li><li>Read customer context</li></ul></div><div class="roleCard"><strong>Read Only</strong><ul><li>Dashboards</li><li>No mutations</li></ul></div></div></section>
 <section class="card"><h2>Backend status</h2><div class="list"><div class="row"><strong>Customer API</strong><span class="pill warn">Not connected</span></div><div class="row"><strong>Cloudflare D1</strong><span class="pill warn">Not connected</span></div><div class="row"><strong>Billing</strong><span class="pill warn">Mock only</span></div><div class="row"><strong>Realtime support</strong><span class="pill warn">Mock only</span></div></div></section></div>
 <div class="grid2" style="margin-top:14px"><section class="card"><h2>Feature flags</h2><div class="flagGrid">${Object.entries(adminState.flags).map(([k,v])=>`<div class="flagCard"><strong>${k}</strong><span>Mock product rollout control</span><div class="switch"><button class="${v?"on":""}" data-flag="${k}" data-requires="flags" data-v="true">On</button><button class="${!v?"on":""}" data-flag="${k}" data-requires="flags" data-v="false">Off</button></div></div>`).join("")}</div></section>
@@ -327,6 +428,29 @@ function currentPerm(){return ROLE_PERMS[document.getElementById("roleSelect")?.
 function enforceRoleUI(){
  const p=currentPerm(),role=document.getElementById("roleSelect")?.value||"Owner";
  document.querySelectorAll("[data-requires]").forEach(el=>{const req=el.dataset.requires;el.classList.toggle("roleLock",!p[req]);el.title=!p[req]?`${role} does not have permission for this action.`:""});
+}
+
+
+/* ============================================================
+   BUSINESS 360 BUILD 5.1 — IPAD COMMAND CENTER MODE
+   ============================================================ */
+const IPAD_MODE_KEY="yasready_admin_ipad_mode";
+function applyIpadMode(on){
+  document.body.classList.toggle("ipadMode",!!on);
+  localStorage.setItem(IPAD_MODE_KEY,on?"1":"0");
+  const btn=document.getElementById("ipadModeToggle");
+  if(btn){btn.classList.toggle("active",!!on);btn.textContent=on?"Desktop Mode":"iPad Mode"}
+}
+function toggleIpadMode(){applyIpadMode(!document.body.classList.contains("ipadMode"))}
+document.getElementById("ipadModeToggle")?.addEventListener("click",toggleIpadMode);
+document.querySelectorAll("[data-dock]").forEach(b=>b.onclick=()=>navigate(b.dataset.dock));
+const savedIpad=localStorage.getItem(IPAD_MODE_KEY)==="1";
+applyIpadMode(savedIpad);
+
+/* Offer iPad mode automatically on tablet-like widths without forcing it. */
+if(!localStorage.getItem(IPAD_MODE_KEY) && window.matchMedia("(min-width:700px) and (max-width:1180px)").matches){
+  const btn=document.getElementById("ipadModeToggle");
+  if(btn){btn.textContent="Try iPad Mode";btn.title="This layout looks like an iPad-sized browser. Tap to optimize YasReady Admin for touch."}
 }
 
 const adminCommands=[

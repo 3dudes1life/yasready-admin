@@ -1,60 +1,31 @@
-# YasReady Admin — Business 360 Build 5 — API-Ready Architecture
+# YasReady Admin — Business 360 Build 5.1 — Browser / iPad Command Center
 
 ## DESTINATION
 ADMIN GITHUB ONLY — `yasready-admin`
 
-DO NOT upload to the customer YasReady GitHub.
+DO NOT upload this build to the customer YasReady GitHub.
 
-## Purpose
-Build 5 freezes the admin frontend architecture before real Cloudflare services are introduced.
+## What Build 5.1 adds
+- One-tap iPad Mode / Desktop Mode toggle
+- Mode preference remembered on the device
+- Full desktop/browser admin preserved
+- iPad touch targets enlarged
+- iPad typography, spacing, grids, cards and tables optimized
+- iPad sticky action dock:
+  Needs Attention / Support / Businesses / Revenue / Customer Success / Operations
+- iPad landscape Support Command Desk:
+  conversations + active chat + live business context
+- iPad portrait support layout adapts automatically
+- No hover-only dependency for important iPad interactions
+- Inputs/composer sized for iPad keyboard and touch
+- Existing Build 5 AdminAPI / API contract / permissions / offline states retained
 
-## Added
-- AdminAPI abstraction layer
-- Major admin screens now pass through simulated API requests before rendering
-- Network latency simulation
-- Offline simulation
-- Fail-next-request simulation
-- Loading skeleton states
-- Error states
-- Retry workflow
-- Empty-state component
-- API Architecture admin screen
-- UI → endpoint map
-- Shared customer/admin/app data contract inspector
-- Exportable shared data contract JSON
-- Role/permission matrix
-- UI permission simulation
-- Stronger owner/admin/support/read-only separation
-- API/backend architecture made explicit in-product
+## Core requirement
+YasReady Admin must be comfortable to run all day from Safari on an iPad.
 
-## Key design principle
-The UI should not care whether data comes from:
-- local mock data today
-- Cloudflare Workers/D1 tomorrow
-- iOS/Android clients later
+Desktop remains the full office dashboard.
+iPad Mode turns the same app into a touch-first support and operations terminal.
 
-All clients should target the same canonical YasReady API/data model.
-
-## Shared-client architecture
-Customer Web
-Admin Web
-iOS
-Android
-   ↓
-YasReady API
-   ↓
-Cloudflare / billing / realtime / notification services
-
-## Build 6
-The next meaningful admin build should stop mocking the data layer and begin real shared backend infrastructure.
-
-Recommended next phase:
-- authentication
-- account/business persistence
-- shared API
-- admin authorization
-- migration strategy
-- real support persistence
-- billing/webhooks after identity/data foundation
-
-Customer YasReady remains a separate repository/version line.
+## Backend status
+Still local/mock.
+Cloudflare/auth/database/billing/realtime are intentionally not connected yet.
