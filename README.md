@@ -1,28 +1,35 @@
-# YasReady Admin — Business 360 Build 1
+# YasReady Admin — Business 360 Build 2
 
 ## DESTINATION
-ADMIN GITHUB ONLY — recommended repo: `yasready-admin`
+ADMIN GITHUB ONLY — repo: `yasready-admin`
 
-DO NOT upload these files to the customer YasReady GitHub.
+DO NOT upload to the customer YasReady GitHub.
 
-## What this build includes
-- Admin command-center overview
-- Customers CRM
-- Businesses list + search
-- Business 360 drill-down
-- Revenue / money-flow surfaces
-- Subscription / plan mix
-- Functional local mock Support Inbox + replies
-- Product analytics
-- System health surface
-- Admin settings
-- Role simulator: Owner / Admin / Support / Read Only
-- Responsive/mobile admin UI
-- Explicit mock states for infrastructure that is not connected yet
+## Build 2 adds
+- Business segmentation filters + CSV export
+- Business 360 with functional tabs:
+  Overview / Workspace / KPIs / Financials / Activity / Support / Subscription
+- Local admin notes persistence
+- Business tags: VIP / Churn Risk / Connect Ready / Needs Follow-up
+- Churn / opportunity / healthy signals on Overview
+- Enhanced Support Inbox:
+  reply, resolve, macro, Business 360 context
+- Revenue transactions + CSV export
+- Retention cohort analytics surface
+- Feature flags
+- Admin task list
+- Local admin audit log
+- Expanded conceptual role model
+- More explicit backend/API contract surfaces
 
-## Architecture
-This is intentionally a separate frontend. Later:
-Customer Web + iOS + Android + Admin -> shared YasReady API -> Cloudflare services/database/billing/support.
+## Still mock/local by design
+No real accounts, Cloudflare API, D1, Stripe, realtime chat, email, Google sync, or production analytics.
 
-## GitHub Pages
-Upload the contents of this ZIP to the root of the ADMIN repo and enable Pages from the main branch/root.
+## Architecture target
+Customer web + iOS + Android + Admin -> shared YasReady API -> Cloudflare backend services.
+
+## Naming
+This is ADMIN product numbering:
+Business 360 Build 2
+
+Customer YasReady remains a separate build/version line.
