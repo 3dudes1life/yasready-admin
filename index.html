@@ -83,10 +83,25 @@ main{padding:30px;max-width:1500px;width:100%;margin:auto}.eyebrow{font-size:10p
 @media(max-width:1000px){.opsGrid{grid-template-columns:repeat(2,1fr)}.globalSearch{min-width:200px}}
 @media(max-width:760px){.globalSearch{display:none}.opsGrid,.macroGrid{grid-template-columns:1fr}.healthScore{grid-template-columns:58px 1fr}}
 
+
+/* === BUSINESS 360 BUILD 5 — API READY ARCHITECTURE === */
+.statePanel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin:14px 0}.statePanel h3{margin:5px 0 8px}.statePanel p{color:#777;font-size:12px;line-height:1.5}.stateActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.skeleton{position:relative;overflow:hidden;background:#ececf0;border-radius:10px;height:14px}.skeleton:after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);animation:shimmer 1.2s infinite}@keyframes shimmer{100%{transform:translateX(100%)}}
+.contractGrid{display:grid;grid-template-columns:280px minmax(0,1fr);gap:14px}.contractNav{background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px;height:max-content}.contractNav button{width:100%;text-align:left;border:0;background:transparent;border-radius:10px;padding:10px;font-size:11px;font-weight:800;cursor:pointer}.contractNav button.active,.contractNav button:hover{background:#f3f1ff}.jsonPanel{background:#111216;color:#d7d7dc;border-radius:18px;padding:18px;overflow:auto;min-height:480px}.jsonPanel pre{margin:0;font-size:11px;line-height:1.55;white-space:pre-wrap;word-break:break-word}.jsonKey{color:#b8aaff}.jsonStr{color:#dfff7d}.jsonNum{color:#ffd47b}.jsonBool{color:#7ddfff}
+.apiMap{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.apiMapCard{border:1px solid #ececef;background:#fff;border-radius:15px;padding:14px}.apiMapCard span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:#888;font-weight:850}.apiMapCard strong{display:block;font-size:12px;margin:6px 0}.apiMapCard code{font-size:10px;color:#5b48d9}
+.permissionMatrix{overflow:auto}.permissionMatrix table{width:100%;border-collapse:collapse;min-width:720px}.permissionMatrix th,.permissionMatrix td{border-bottom:1px solid #eee;padding:10px;text-align:center;font-size:10px}.permissionMatrix th:first-child,.permissionMatrix td:first-child{text-align:left}.permYes{color:#4b6500;font-weight:900}.permNo{color:#aaa}.permLimited{color:#7a5f00;font-weight:850}
+.modeBar{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.modeBar button{border:1px solid #ddd;background:#fff;border-radius:999px;padding:7px 9px;font-size:10px;font-weight:850}.modeBar button.active{background:#171719;color:#fff}
+.offlineBanner{background:#fff2d8;border:1px solid #efd89e;color:#6f5512;padding:10px 14px;font-size:11px;font-weight:800;display:none}.offlineBanner.show{display:block}
+.apiBadge{display:inline-flex;padding:5px 7px;border-radius:999px;background:#f1efff;color:#5d49dc;font-size:9px;font-weight:900}
+.roleLock{opacity:.45;pointer-events:none;filter:grayscale(.2)}
+.mutationNote{font-size:10px;color:#888;margin-top:7px}
+@media(max-width:900px){.contractGrid{grid-template-columns:1fr}.apiMap{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.apiMap{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body><div class="app">
-<header class="top"><div class="brand">YasReady<span>.</span></div><div class="adminPill">ADMIN · BUSINESS 360 BUILD 4</div>
+<div id="offlineBanner" class="offlineBanner">Offline simulation active — AdminAPI is returning local mock data.</div><header class="top"><div class="brand">YasReady<span>.</span></div><div class="adminPill">ADMIN · BUSINESS 360 BUILD 5</div>
 <div class="topRight"><div class="globalSearch"><input id="globalSearchInput" placeholder="Search businesses, customers, support…  ⌘K"><span class="searchIcon">⌕</span></div><button class="notifyBtn" id="notifyBtn">🔔<span class="notifyDot"></span></button><select id="roleSelect" class="secondary btn"><option>Owner</option><option>Admin</option><option>Support</option><option>Read Only</option></select><div class="avatar">W</div></div></header>
 <div id="notifyPanel" class="notifyPanel hidden"></div>
 <div id="commandBackdrop" class="commandBackdrop hidden"><div class="commandBox"><input id="commandInput" placeholder="Jump anywhere in YasReady Admin…"><div id="commandResults" class="commandResults"></div></div></div><div class="layout"><aside><div class="nav">
@@ -95,7 +110,7 @@ main{padding:30px;max-width:1500px;width:100%;margin:auto}.eyebrow{font-size:10p
 <div class="navTitle">Money</div><button data-view="revenue">Revenue</button><button data-view="subscriptions">Subscriptions</button>
 <div class="navTitle">Customer Success</div><button data-view="support">Support Inbox <span class="count">4</span></button>
 <div class="navTitle">Intelligence</div><button data-view="analytics">Product Analytics</button><button data-view="success">Customer Success</button><button data-view="feedback">Feedback & Requests</button><button data-view="health">System Health</button>
-<div class="navTitle">Admin</div><button data-view="content">Announcements</button><button data-view="operations">Operations</button><button data-view="settings">Settings</button>
+<div class="navTitle">Admin</div><button data-view="content">Announcements</button><button data-view="operations">Operations</button><button data-view="architecture">API Architecture</button><button data-view="settings">Settings</button>
 </div></aside><main id="content"></main></div></div>
 <script>
 const money=n=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n);
@@ -119,6 +134,44 @@ let current="overview", selectedBiz=businesses[0], selectedThread=threads[0];
 
 const adminState=JSON.parse(localStorage.getItem("yasready_admin_b360_build2")||'{"notes":{},"tags":{},"tasks":[],"flags":{"googleConnectPreview":true,"founderTierSimulator":true,"supportChat":true,"excelExport":true},"audit":[]}');
 function saveAdmin(){localStorage.setItem("yasready_admin_b360_build2",JSON.stringify(adminState))}
+
+/* ============================================================
+   BUSINESS 360 BUILD 5 — ADMIN API ABSTRACTION
+   UI code should consume AdminAPI rather than caring where data lives.
+   Today: local mock adapter. Later: Cloudflare fetch adapter.
+   ============================================================ */
+const API_MODE_KEY="yasready_admin_api_mode";
+let apiMode=localStorage.getItem(API_MODE_KEY)||"mock";
+let apiState={latency:120,failNext:false,offline:false};
+
+const AdminAPI={
+  async wait(){if(apiState.offline)throw new Error("OFFLINE");await new Promise(r=>setTimeout(r,apiState.latency));if(apiState.failNext){apiState.failNext=false;throw new Error("SIMULATED_API_FAILURE")}},
+  async getOverview(){await this.wait();return {mrr:1184,businesses:141,accounts:128,paidConversion:31.3,needsAttention:7}},
+  async getBusinesses(){await this.wait();return structuredClone(businesses)},
+  async getBusiness360(id){await this.wait();const b=businesses.find(x=>x.id==id);if(!b)throw new Error("NOT_FOUND");return structuredClone(b)},
+  async getCustomers(){await this.wait();return structuredClone(businesses)},
+  async getRevenue(){await this.wait();return {mrr:1184,arr:14208,arpu:29.60,failed:39.98,transactions:[["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"],["Aug 15","Northside Mobile Detail","Run renewal",9.99,"Paid"],["Aug 15","Glow Reiki","Upgrade attempt",9.99,"Failed"]]}},
+  async getSubscriptions(){await this.wait();return {free:88,run:24,connect:16,churn:2.1}},
+  async getSupportThreads(){await this.wait();return structuredClone(threads)},
+  async sendSupportReply(threadId,text){await this.wait();const t=threads.find(x=>x.id==threadId);if(!t)throw new Error("NOT_FOUND");t.messages.push(["admin",text]);t.status="Waiting on customer";return structuredClone(t)},
+  async resolveSupportThread(threadId){await this.wait();const t=threads.find(x=>x.id==threadId);if(!t)throw new Error("NOT_FOUND");t.status="Resolved";return structuredClone(t)},
+  async getAnalytics(){await this.wait();return {onboarding:82,monthlyCheckin:47,todayUsage:63,kpiEngagement:71}},
+  async getCustomerSuccess(){await this.wait();return {healthy:91,watch:25,atRisk:12,expansionReady:8}},
+  async getFeedback(){await this.wait();return structuredClone(adminState.feedback)},
+  async getAnnouncements(){await this.wait();return structuredClone(adminState.announcements)},
+  async getOperations(){await this.wait();return {tasks:structuredClone(adminState.tasks),releases:structuredClone(adminState.releases),macros:structuredClone(adminState.supportMacros)}},
+  async updateAdminNote(businessId,note){await this.wait();adminState.notes[businessId]=note;saveAdmin();return {ok:true}},
+  async updateFeatureFlag(key,value){await this.wait();adminState.flags[key]=value;saveAdmin();return {ok:true,key,value}},
+  async getFeatureFlags(){await this.wait();return structuredClone(adminState.flags)},
+  async getAudit(){await this.wait();return structuredClone(adminState.audit)},
+  async getContract(){await this.wait();return buildDataContract()}
+};
+function setApiMode(mode){apiMode=mode;localStorage.setItem(API_MODE_KEY,mode);apiState.offline=mode==="offline";document.getElementById("offlineBanner")?.classList.toggle("show",apiState.offline)}
+function simulateNextApiFailure(){apiState.failNext=true}
+function renderLoading(title="Loading YasReady Admin…"){content.innerHTML=`<div class="statePanel"><span class="eyebrow">AdminAPI</span><h3>${title}</h3><div style="display:grid;gap:10px;margin-top:16px"><div class="skeleton" style="width:42%"></div><div class="skeleton" style="width:88%"></div><div class="skeleton" style="width:72%"></div><div class="skeleton" style="width:93%"></div></div></div>`}
+function renderApiError(err,retryView){const offline=String(err?.message||err).includes("OFFLINE");content.innerHTML=`<div class="statePanel"><span class="eyebrow">${offline?"Offline":"AdminAPI error"}</span><h3>${offline?"YasReady Admin can't reach the data layer.":"Something went wrong loading this admin view."}</h3><p>${offline?"This is the exact kind of state the real Cloudflare-backed admin must handle gracefully.":"The simulated API returned an error. No admin data was destroyed."}</p><div class="stateActions"><button class="btn primary" id="retryApi">Retry</button><button class="btn secondary" data-jump="overview">Back to Overview</button></div></div>`;document.getElementById("retryApi").onclick=()=>navigate(retryView);bindJumps()}
+function renderEmpty(title,copy){return `<div class="statePanel"><span class="eyebrow">Nothing here yet</span><h3>${title}</h3><p>${copy}</p></div>`}
+
 adminState.savedViews=adminState.savedViews||["All Businesses","Churn Risk","Connect Ready","Needs Follow-up"];
 adminState.announcements=adminState.announcements||[];
 adminState.feedback=adminState.feedback||[
@@ -168,7 +221,7 @@ ${businesses.slice(0,5).map(b=>{const h=Math.max(20,Math.min(98,Math.round((b.re
 function businessesView(){content.innerHTML=`<span class="eyebrow">Businesses</span><h1>Every business.</h1><p class="sub">Filter, segment, export, and open Business 360 for the complete customer/business context.</p>
 <div class="slaGrid"><div class="sla"><span>First response</span><strong>18m</strong></div><div class="sla"><span>Open threads</span><strong>4</strong></div><div class="sla"><span>Waiting on us</span><strong>3</strong></div><div class="sla"><span>Resolved 7d</span><strong>19</strong></div></div>
 <div class="savedViewBar"><button class="active" data-saved="all">All Businesses</button><button data-saved="risk">Churn Risk</button><button data-saved="connect">Connect Ready</button><button data-saved="follow">Needs Follow-up</button></div>
-<div class="sectionHead"><div class="toolbar"><input id="bizSearch" placeholder="Search business or owner…"><select id="planFilter"><option value="">All plans</option><option value="free">Free</option><option value="run">Run</option><option value="connect">Connect</option></select><select id="readyFilter"><option value="">All readiness</option><option value="80">80%+</option><option value="60">60%+</option><option value="under60">Under 60%</option></select></div><button class="btn secondary" id="exportBusinesses">Export CSV</button></div><div class="bulkBar"><span>Bulk actions (mock)</span><select id="bulkAction"><option>Tag selected</option><option>Assign success owner</option><option>Export selected</option><option>Send announcement</option></select><button id="runBulk">Run action</button></div><div id="bizTable">${tableBiz()}</div>`;
+<div class="sectionHead"><div class="toolbar"><input id="bizSearch" placeholder="Search business or owner…"><select id="planFilter"><option value="">All plans</option><option value="free">Free</option><option value="run">Run</option><option value="connect">Connect</option></select><select id="readyFilter"><option value="">All readiness</option><option value="80">80%+</option><option value="60">60%+</option><option value="under60">Under 60%</option></select></div><button class="btn secondary" id="exportBusinesses" data-requires="export">Export CSV</button></div><div class="bulkBar"><span>Bulk actions (mock)</span><select id="bulkAction"><option>Tag selected</option><option>Assign success owner</option><option>Export selected</option><option>Send announcement</option></select><button id="runBulk">Run action</button></div><div id="bizTable">${tableBiz()}</div>`;
 const rerender=()=>{const q=document.getElementById("bizSearch").value.toLowerCase(),pf=document.getElementById("planFilter").value,rf=document.getElementById("readyFilter").value;let rows=businesses.filter(b=>(b.name+b.owner+b.email).toLowerCase().includes(q));if(pf)rows=rows.filter(b=>b.plan===pf);if(rf==="80")rows=rows.filter(b=>b.ready>=80);if(rf==="60")rows=rows.filter(b=>b.ready>=60);if(rf==="under60")rows=rows.filter(b=>b.ready<60);document.getElementById("bizTable").innerHTML=tableBiz(rows);bindRows()};["bizSearch","planFilter","readyFilter"].forEach(id=>document.getElementById(id).oninput=rerender);document.querySelectorAll("[data-saved]").forEach(v=>v.onclick=()=>{document.querySelectorAll("[data-saved]").forEach(x=>x.classList.remove("active"));v.classList.add("active");const key=v.dataset.saved;let rows=businesses;if(key==="risk")rows=businesses.filter(b=>b.ready<65||b.last.includes("days"));if(key==="connect")rows=businesses.filter(b=>b.plan==="run"&&b.kpis>=6);if(key==="follow")rows=businesses.filter(b=>b.support>0);document.getElementById("bizTable").innerHTML=tableBiz(rows);bindRows()});document.getElementById("runBulk").onclick=()=>{audit("Ran mock bulk action",document.getElementById("bulkAction").value);alert("Mock admin bulk action recorded in audit log.")};document.getElementById("exportBusinesses").onclick=()=>{csvDownload("yasready-businesses.csv",[["Business","Owner","Email","Plan","Readiness","Revenue","Goal","Last Active"],...businesses.map(b=>[b.name,b.owner,b.email,plans[b.plan],b.ready,b.revenue,b.goal,b.last])]);audit("Exported businesses CSV")};bindRows()}
 function customers(){content.innerHTML=`<span class="eyebrow">Customers</span><h1>Customer CRM.</h1><p class="sub">Account-level view for plan, businesses, support load, and activity.</p><div class="grid4">${metric("Accounts","128","141 businesses")}${metric("Active 7d","94","73.4%")}${metric("Paid","40","31.3%")}${metric("Support open","4","3 new")}</div>${tableBiz()}`;bindRows()}
 function business360(b,tab="overview"){selectedBiz=b;const tags=adminState.tags[b.id]||[];content.innerHTML=`<button class="btn ghost" data-jump="businesses">← Businesses</button><section class="hero360"><div class="heroTop"><div><span class="eyebrow" style="color:var(--lime)">Business 360</span><h1>${b.name}</h1><p class="sub">${b.description}</p><div class="tagRow" style="margin-top:12px">${["VIP","Churn Risk","Connect Ready","Needs Follow-up"].map(t=>`<button class="tag ${tags.includes(t)?"on":""}" data-tag="${t}">${t}</button>`).join("")}</div></div><div><span class="pill ${b.plan==="free"?"free":""}">${plans[b.plan]}</span></div></div></section>
@@ -189,9 +242,9 @@ subscription:`<div class="grid2"><section class="card"><h2>${plans[b.plan]}</h2>
 document.getElementById("b360Panel").innerHTML=panels[tab]||panels.overview;bindJumps();const s=document.getElementById("saveInternalNote");if(s)s.onclick=()=>{adminState.notes[b.id]=document.getElementById("internalNote").value;saveAdmin();audit("Saved internal note",b.name);s.textContent="Saved ✓";setTimeout(()=>s.textContent="Save note",900)}}
 function revenue(){content.innerHTML=`<span class="eyebrow">Revenue</span><h1>Money flow.</h1><p class="sub">Mock financial command center now; later this reconciles Stripe + plan events through the shared backend.</p><div class="grid4">${metric("MRR","$1,184","+12.4%")}${metric("ARR","$14,208","Run-rate")}${metric("ARPU","$29.60","Paid accounts")}${metric("Failed","$39.98","2 payments")}</div><div class="grid2"><section class="card"><h2>Plan revenue</h2><div class="list"><div class="row"><strong>Run YasReady</strong><span>$619/mo</span></div><div class="row"><strong>Connect YasReady</strong><span>$565/mo</span></div></div></section><section class="card"><h2>Growth</h2><div class="bar"><label>Free → paid</label><div class="track"><i style="width:31%"></i></div><strong>31%</strong></div><div class="bar"><label>Run → Connect</label><div class="track"><i style="width:22%"></i></div><strong>22%</strong></div></section></div>
 <div class="sectionHead"><h2>Failed-payment recovery</h2></div><section class="card"><div class="dunningList">${adminState.dunning.map(d=>`<div class="dunningRow"><div><strong>${d.business}</strong><span>${money(d.amount)} · ${d.status}</span></div><span class="attempt">Attempt ${d.attempt}</span><button class="btn secondary" data-retry="${d.business}">Mock retry</button></div>`).join("")}</div></section>
-<div class="sectionHead"><h2>Recent transactions</h2><button class="btn secondary" id="exportRevenue">Export CSV</button></div><div class="tableWrap"><table class="table"><thead><tr><th>Date</th><th>Business</th><th>Event</th><th>Amount</th><th>Status</th></tr></thead><tbody>${[["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"],["Aug 15","Northside Mobile Detail","Run renewal",9.99,"Paid"],["Aug 15","Glow Reiki","Upgrade attempt",9.99,"Failed"]].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>$${r[3].toFixed(2)}</td><td><span class="pill ${r[4]==="Paid"?"good":"bad"}">${r[4]}</span></td></tr>`).join("")}</tbody></table></div>`;document.getElementById("exportRevenue").onclick=()=>{csvDownload("yasready-revenue.csv",[["Date","Business","Event","Amount","Status"],["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"]]);audit("Exported revenue CSV")};document.querySelectorAll("[data-retry]").forEach(x=>x.onclick=()=>{const d=adminState.dunning.find(v=>v.business===x.dataset.retry);d.attempt++;d.status="Retry queued";saveAdmin();audit("Queued payment retry",d.business);revenue()})}
+<div class="sectionHead"><h2>Recent transactions</h2><button class="btn secondary" id="exportRevenue" data-requires="export">Export CSV</button></div><div class="tableWrap"><table class="table"><thead><tr><th>Date</th><th>Business</th><th>Event</th><th>Amount</th><th>Status</th></tr></thead><tbody>${[["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"],["Aug 15","Northside Mobile Detail","Run renewal",9.99,"Paid"],["Aug 15","Glow Reiki","Upgrade attempt",9.99,"Failed"]].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>$${r[3].toFixed(2)}</td><td><span class="pill ${r[4]==="Paid"?"good":"bad"}">${r[4]}</span></td></tr>`).join("")}</tbody></table></div>`;document.getElementById("exportRevenue").onclick=()=>{csvDownload("yasready-revenue.csv",[["Date","Business","Event","Amount","Status"],["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"]]);audit("Exported revenue CSV")};document.querySelectorAll("[data-retry]").forEach(x=>x.onclick=()=>{const d=adminState.dunning.find(v=>v.business===x.dataset.retry);d.attempt++;d.status="Retry queued";saveAdmin();audit("Queued payment retry",d.business);revenue()})}
 function subscriptions(){content.innerHTML=`<span class="eyebrow">Subscriptions</span><h1>Plans & billing.</h1><div class="grid4">${metric("Free","88","68.7%")}${metric("$9.99 Run","24","18.8%")}${metric("$19.99 Connect","16","12.5%")}${metric("Churn","2.1%","Mock 30d")}</div>${tableBiz()}`;bindRows()}
-function support(){content.innerHTML=`<span class="eyebrow">Support</span><h1>Talk where the business lives.</h1><p class="sub">Customer context, statuses, internal workflow, and replies in one place.</p><div class="sectionHead"><div class="toolbar"><select id="supportStatus"><option>All statuses</option><option>New</option><option>Waiting on us</option><option>Waiting on customer</option><option>Resolved</option></select><button class="btn secondary" id="supportMacro">Insert macro</button></div><span class="pill warn">4 open</span></div><div class="inbox"><div class="threads">${threads.map(t=>`<div class="thread ${t.id===selectedThread.id?"active":""}" data-thread="${t.id}"><strong>${t.name}</strong><p>${t.subject}</p><small>${t.status} · ${t.time}</small></div>`).join("")}</div><div class="chat"><div class="chatHead"><strong>${selectedThread.name}</strong><br><small>${selectedThread.subject}</small><div style="margin-top:8px"><button class="btn ghost" id="openContext">Open Business 360</button><button class="btn ghost" id="resolveThread">Mark resolved</button></div></div><div class="messages">${selectedThread.messages.map(m=>`<div class="bubble ${m[0]==="admin"?"admin":""}">${m[1]}</div>`).join("")}</div><div class="composer"><textarea id="reply" placeholder="Reply to customer…"></textarea><button class="btn primary" id="sendReply">Send</button></div></div></div>`;
+function support(){content.innerHTML=`<span class="eyebrow">Support</span><h1>Talk where the business lives.</h1><p class="sub">Customer context, statuses, internal workflow, and replies in one place.</p><div class="sectionHead"><div class="toolbar"><select id="supportStatus"><option>All statuses</option><option>New</option><option>Waiting on us</option><option>Waiting on customer</option><option>Resolved</option></select><button class="btn secondary" id="supportMacro">Insert macro</button></div><span class="pill warn">4 open</span></div><div class="inbox"><div class="threads">${threads.map(t=>`<div class="thread ${t.id===selectedThread.id?"active":""}" data-thread="${t.id}"><strong>${t.name}</strong><p>${t.subject}</p><small>${t.status} · ${t.time}</small></div>`).join("")}</div><div class="chat"><div class="chatHead"><strong>${selectedThread.name}</strong><br><small>${selectedThread.subject}</small><div style="margin-top:8px"><button class="btn ghost" id="openContext">Open Business 360</button><button class="btn ghost" id="resolveThread">Mark resolved</button></div></div><div class="messages">${selectedThread.messages.map(m=>`<div class="bubble ${m[0]==="admin"?"admin":""}">${m[1]}</div>`).join("")}</div><div class="composer"><textarea id="reply" placeholder="Reply to customer…"></textarea><button class="btn primary" id="sendReply" data-requires="support">Send</button></div></div></div>`;
 document.querySelectorAll("[data-thread]").forEach(x=>x.onclick=()=>{selectedThread=threads.find(t=>t.id==x.dataset.thread);support()});document.getElementById("openContext").onclick=()=>business360(businesses.find(b=>b.id===selectedThread.biz));document.getElementById("resolveThread").onclick=()=>{selectedThread.status="Resolved";audit("Resolved support thread",selectedThread.name);support()};document.getElementById("supportMacro").onclick=()=>{const pick=prompt("Choose macro:\n"+adminState.supportMacros.map((m,i)=>(i+1)+". "+m.name).join("\n"),"1");const m=adminState.supportMacros[(parseInt(pick)||1)-1];if(m)document.getElementById("reply").value=m.text;};document.getElementById("sendReply").onclick=()=>{const r=document.getElementById("reply");if(!r.value.trim())return;selectedThread.messages.push(["admin",r.value.trim()]);selectedThread.status="Waiting on customer";audit("Sent support reply",selectedThread.name);support()}}
 function analytics(){content.innerHTML=`<span class="eyebrow">Product Intelligence</span><h1>How people use YasReady.</h1><div class="grid4">${metric("Onboarding complete","82%","+4.2 pts")}${metric("Monthly check-in","47%","Paid users")}${metric("Today weekly use","63%","Active businesses")}${metric("KPI engagement","71%","Run + Connect")}</div><div class="grid2"><section class="card"><h2>Setup funnel</h2>${[["Business basics",96],["Offer + price",88],["Costs + goal",76],["Launch / performance",62]].map(x=>`<div class="bar"><label>${x[0]}</label><div class="track"><i style="width:${x[1]}%"></i></div><strong>${x[1]}%</strong></div>`).join("")}</section><section class="card"><h2>Feature usage</h2>${[["Today",63],["KPIs",71],["Financial Model",54],["Excel export",29],["Business 101",41]].map(x=>`<div class="bar"><label>${x[0]}</label><div class="track"><i style="width:${x[1]}%"></i></div><strong>${x[1]}%</strong></div>`).join("")}</section></div>
 <section class="card" style="margin-top:14px"><h2>Retention cohorts</h2><p class="sub">Mock cohort surface so we know exactly what we want to persist and query later.</p><div class="cohort"><div class="head">Cohort</div><div class="head">W0</div><div class="head">W1</div><div class="head">W2</div><div class="head hideC">W3</div><div class="head hideC">W4</div><div class="head hideC">W5</div>${[["Jul 6",100,71,62,55,49,46],["Jul 13",100,74,65,57,52,0],["Jul 20",100,76,68,61,0,0]].map(r=>r.map((v,i)=>`<div class="${i&&v>=70?"heat4":i&&v>=60?"heat3":i&&v>=50?"heat2":i&&v?"heat1":""} ${i>3?"hideC":""}">${i?v+"%":v}</div>`).join("")).join("")}</div></section>`}
@@ -213,7 +266,7 @@ document.querySelectorAll("[data-feedback]").forEach(x=>x.onclick=()=>{const f=a
 function health(){content.innerHTML=`<span class="eyebrow">System Health</span><h1>Know before customers do.</h1><div class="grid4">${metric("API","Healthy","Mock")}${metric("Database","Healthy","Mock D1")}${metric("Support realtime","Ready","Mock architecture")}${metric("Errors","0","Current local build")}</div><div class="notice">No production services are connected in Business 360 Build 1. These health cards intentionally represent the future monitoring surface, not fake live infrastructure.</div>`}
 
 function contentAdmin(){content.innerHTML=`<span class="eyebrow">Announcements</span><h1>Talk to customers inside YasReady.</h1><p class="sub">Prepare the product surface for release notes, maintenance notices, plan announcements, onboarding tips, and customer education without relying on email for everything.</p>
-<div class="grid2"><section class="card"><h2>Create announcement</h2><div class="field"><label>Audience</label><select id="announceAudience"><option>Everyone</option><option>Free</option><option>Run $9.99</option><option>Connect $19.99</option></select></div><div class="field" style="margin-top:10px"><label>Message</label><textarea id="announceText" placeholder="What's new in YasReady?"></textarea></div><button class="btn primary" id="publishAnnouncement" style="margin-top:10px">Publish mock announcement</button></section>
+<div class="grid2"><section class="card"><h2>Create announcement</h2><div class="field"><label>Audience</label><select id="announceAudience"><option>Everyone</option><option>Free</option><option>Run $9.99</option><option>Connect $19.99</option></select></div><div class="field" style="margin-top:10px"><label>Message</label><textarea id="announceText" placeholder="What's new in YasReady?"></textarea></div><button class="btn primary" data-requires="mutate" id="publishAnnouncement" style="margin-top:10px">Publish mock announcement</button></section>
 <section class="card"><h2>Future delivery channels</h2><div class="list"><div class="row"><strong>In-app banner</strong><span class="pill good">Buildable now</span></div><div class="row"><strong>Notification center</strong><span class="pill">API contract ready</span></div><div class="row"><strong>Push notification</strong><span class="pill warn">Apps/backend needed</span></div><div class="row"><strong>Email</strong><span class="pill warn">Backend needed</span></div></div></section></div>
 <div class="sectionHead"><h2>Published mock announcements</h2></div><div class="grid3">${adminState.announcements.map(a=>`<div class="announceCard"><strong>${a.text}</strong><span>${a.audience} · ${new Date(a.at).toLocaleString()}</span></div>`).join("")||'<div class="notice">No announcements yet.</div>'}</div>`;
 document.getElementById("publishAnnouncement").onclick=()=>{const t=document.getElementById("announceText").value.trim();if(!t)return;adminState.announcements.unshift({id:"a_"+Date.now(),audience:document.getElementById("announceAudience").value,text:t,at:new Date().toISOString()});saveAdmin();audit("Published mock announcement",t);contentAdmin()}}
@@ -227,15 +280,54 @@ function operations(){content.innerHTML=`<span class="eyebrow">Operations</span>
 <section class="card"><h2>What needs real backend next?</h2><div class="list"><div class="row"><strong>Authentication + admin identity</strong><span class="pill bad">Required</span></div><div class="row"><strong>Shared customer/business records</strong><span class="pill bad">Required</span></div><div class="row"><strong>Stripe billing events</strong><span class="pill bad">Required</span></div><div class="row"><strong>Realtime support/chat</strong><span class="pill bad">Required</span></div><div class="row"><strong>Push + email notifications</strong><span class="pill warn">Apps/backend</span></div></div></section></div>`;
 document.querySelectorAll("[data-release]").forEach(x=>x.onclick=()=>{const r=adminState.releases.find(v=>v.id===x.dataset.release);r.status=x.dataset.status;saveAdmin();audit("Changed release status",r.name+" → "+r.status);operations()});document.querySelectorAll("[data-copy]").forEach(x=>x.onclick=()=>{const m=adminState.supportMacros.find(v=>v.id===x.dataset.copy);navigator.clipboard?.writeText(m.text);audit("Copied support macro",m.name)});document.querySelectorAll("[data-op-task]").forEach(x=>x.onclick=()=>{const t=adminState.tasks.find(v=>v.id===x.dataset.opTask);t.done=!t.done;saveAdmin();audit("Toggled admin task",t.text);operations()});document.getElementById("addRelease").onclick=()=>{adminState.releases.push({id:"r_"+Date.now(),name:"New release",channel:"Customer Web",status:"Planning"});saveAdmin();operations()};document.getElementById("addMacro").onclick=()=>{adminState.supportMacros.push({id:"m_"+Date.now(),name:"New macro",text:"Edit this response when backend editing exists."});saveAdmin();operations()}}
 
+
+function architecture(){content.innerHTML=`<span class="eyebrow">API-Ready Architecture</span><h1>Freeze the contract before Cloudflare.</h1><p class="sub">Business 360 Build 5 separates the admin UI from its data source. The same screens can move from local mock data to real Cloudflare endpoints without redesigning the product.</p>
+<div class="grid4">${metric("AdminAPI","Active","Mock adapter")}${metric("Client surfaces","4","Customer · Admin · iOS · Android")}${metric("Contract version","0.2","Pre-Cloudflare")}${metric("Real backend","Not connected","Intentional")}</div>
+<div class="modeBar"><button data-mode="mock" class="${apiMode==="mock"?"active":""}">Normal mock API</button><button data-mode="slow" class="${apiMode==="slow"?"active":""}">Slow network</button><button data-mode="offline" class="${apiMode==="offline"?"active":""}">Offline</button><button id="failNextApi">Fail next request</button></div>
+<section class="card"><div class="sectionHead"><h2>UI → API map</h2><span class="apiBadge">Backend target</span></div><div class="apiMap">${[
+["Overview","getOverview()","GET /v1/admin/overview"],
+["Businesses","getBusinesses()","GET /v1/businesses"],
+["Business 360","getBusiness360(id)","GET /v1/businesses/:id"],
+["Revenue","getRevenue()","GET /v1/admin/revenue"],
+["Subscriptions","getSubscriptions()","GET /v1/subscriptions"],
+["Support","getSupportThreads()","GET /v1/conversations"],
+["Send Reply","sendSupportReply()","POST /v1/conversations/:id/messages"],
+["Analytics","getAnalytics()","GET /v1/admin/analytics"],
+["Success","getCustomerSuccess()","GET /v1/admin/customer-health"],
+["Feature Flags","getFeatureFlags()","GET /v1/admin/feature-flags"],
+["Audit","getAudit()","GET /v1/admin/audit"],
+["Announcements","getAnnouncements()","GET /v1/announcements"]
+].map(x=>`<div class="apiMapCard"><span>${x[0]}</span><strong>${x[1]}</strong><code>${x[2]}</code></div>`).join("")}</div></section>
+<div class="sectionHead"><h2>Shared data contract inspector</h2><button class="btn secondary" id="exportContract5">Export contract JSON</button></div>
+<div class="contractGrid"><aside class="contractNav">${Object.keys(contractSamples).map((k,i)=>`<button data-contract="${k}" class="${i===0?"active":""}">${k}</button>`).join("")}</aside><section class="jsonPanel"><pre id="contractJson"></pre></section></div>
+<section class="card" style="margin-top:14px"><h2>Permission contract</h2><div class="permissionMatrix"><table><thead><tr><th>Capability</th><th>Owner</th><th>Admin</th><th>Support</th><th>Read Only</th></tr></thead><tbody>${[
+["View customers","yes","yes","limited","yes"],["View billing","yes","yes","no","yes"],["Reply to support","yes","yes","yes","no"],["Edit admin notes","yes","yes","yes","no"],["Feature flags","yes","yes","no","no"],["Admin roles","yes","no","no","no"],["Export customer data","yes","yes","no","no"]
+].map(r=>`<tr><td>${r[0]}</td>${r.slice(1).map(v=>`<td class="${v==="yes"?"permYes":v==="limited"?"permLimited":"permNo"}">${v==="yes"?"✓":v==="limited"?"Limited":"—"}</td>`).join("")}</tr>`).join("")}</tbody></table></div></section>`;
+const renderContract=name=>{document.querySelectorAll("[data-contract]").forEach(x=>x.classList.toggle("active",x.dataset.contract===name));document.getElementById("contractJson").innerHTML=syntaxHighlight(contractSamples[name]())};renderContract("Business 360");document.querySelectorAll("[data-contract]").forEach(x=>x.onclick=()=>renderContract(x.dataset.contract));document.querySelectorAll("[data-mode]").forEach(x=>x.onclick=()=>{const m=x.dataset.mode;apiState.latency=m==="slow"?1400:120;setApiMode(m);architecture()});document.getElementById("failNextApi").onclick=()=>{simulateNextApiFailure();alert("The next AdminAPI request will fail so you can test the error state.")};document.getElementById("exportContract5").onclick=()=>{const blob=new Blob([JSON.stringify(buildDataContract(),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="yasready-shared-data-contract-v0.2.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),400);audit("Exported shared data contract")}}
+
 function settings(){content.innerHTML=`<span class="eyebrow">Admin Settings</span><h1>Control the office.</h1>
 <div class="grid2"><section class="card"><h2>Admin role simulator</h2><p class="sub">Conceptual access model before real authentication exists.</p><div class="roleGrid"><div class="roleCard"><strong>Owner</strong><ul><li>Everything</li><li>Billing</li><li>Roles</li></ul></div><div class="roleCard"><strong>Admin</strong><ul><li>Customers</li><li>Business 360</li><li>Support</li></ul></div><div class="roleCard"><strong>Support</strong><ul><li>Support</li><li>Read customer context</li></ul></div><div class="roleCard"><strong>Read Only</strong><ul><li>Dashboards</li><li>No mutations</li></ul></div></div></section>
 <section class="card"><h2>Backend status</h2><div class="list"><div class="row"><strong>Customer API</strong><span class="pill warn">Not connected</span></div><div class="row"><strong>Cloudflare D1</strong><span class="pill warn">Not connected</span></div><div class="row"><strong>Billing</strong><span class="pill warn">Mock only</span></div><div class="row"><strong>Realtime support</strong><span class="pill warn">Mock only</span></div></div></section></div>
-<div class="grid2" style="margin-top:14px"><section class="card"><h2>Feature flags</h2><div class="flagGrid">${Object.entries(adminState.flags).map(([k,v])=>`<div class="flagCard"><strong>${k}</strong><span>Mock product rollout control</span><div class="switch"><button class="${v?"on":""}" data-flag="${k}" data-v="true">On</button><button class="${!v?"on":""}" data-flag="${k}" data-v="false">Off</button></div></div>`).join("")}</div></section>
+<div class="grid2" style="margin-top:14px"><section class="card"><h2>Feature flags</h2><div class="flagGrid">${Object.entries(adminState.flags).map(([k,v])=>`<div class="flagCard"><strong>${k}</strong><span>Mock product rollout control</span><div class="switch"><button class="${v?"on":""}" data-flag="${k}" data-requires="flags" data-v="true">On</button><button class="${!v?"on":""}" data-flag="${k}" data-requires="flags" data-v="false">Off</button></div></div>`).join("")}</div></section>
 <section class="card"><h2>Admin tasks</h2><div id="adminTaskList" class="adminTasks"></div><div class="toolbar" style="margin-top:10px"><input id="adminTaskInput" placeholder="Add internal task…"><button class="btn secondary" id="addAdminTask">Add</button></div></section></div>
 <section class="card" style="margin-top:14px"><div class="sectionHead"><h2>Audit log</h2><button class="btn secondary" id="clearAudit">Clear local audit</button></div><div class="auditList">${adminState.audit.slice(0,20).map(a=>`<div class="auditItem"><time>${new Date(a.at).toLocaleString()}</time><strong>${a.action}<span>${a.detail||""}</span></strong><span class="auditActor">${a.actor}</span></div>`).join("")||'<div class="notice">No local admin actions logged yet.</div>'}</div></section>
 <section class="card" style="margin-top:14px"><h2>Admin team</h2><div class="teamGrid"><div class="teamCard"><strong>William</strong><span>Owner</span></div><div class="teamCard"><strong>Future Admin</strong><span>Admin</span></div><div class="teamCard"><strong>Future Support</strong><span>Support</span></div><div class="teamCard"><strong>Analyst</strong><span>Read Only</span></div></div></section>
+<section class="card" style="margin-top:14px"><div class="sectionHead"><h2>API-ready admin</h2><button class="btn secondary" data-jump="architecture">Open architecture inspector</button></div><p class="sub">Business 360 Build 5 routes admin data through the AdminAPI abstraction so Cloudflare can replace the local mock adapter later without redesigning the UI.</p></section>
 <section class="card" style="margin-top:14px"><h2>Architecture contract</h2><p class="sub">Admin, customer web, iOS, and Android consume the same YasReady API. This admin frontend remains a separate deployment and never ships inside the customer repository.</p></section>`;
 document.querySelectorAll("[data-flag]").forEach(b=>b.onclick=()=>{adminState.flags[b.dataset.flag]=b.dataset.v==="true";saveAdmin();audit("Changed feature flag",b.dataset.flag+"="+b.dataset.v);settings()});const renderTasks=()=>{document.getElementById("adminTaskList").innerHTML=adminState.tasks.map(t=>`<div class="adminTask ${t.done?"done":""}"><button data-task="${t.id}">${t.done?"✓":""}</button><div><strong>${t.text}</strong><small>${new Date(t.at).toLocaleDateString()}</small></div><span></span></div>`).join("")||'<div class="notice">No admin tasks yet.</div>';document.querySelectorAll("[data-task]").forEach(x=>x.onclick=()=>{const t=adminState.tasks.find(v=>v.id===x.dataset.task);t.done=!t.done;saveAdmin();audit("Toggled admin task",t.text);settings()})};renderTasks();document.getElementById("addAdminTask").onclick=()=>{const i=document.getElementById("adminTaskInput");if(!i.value.trim())return;adminState.tasks.unshift({id:"t_"+Date.now(),text:i.value.trim(),done:false,at:new Date().toISOString()});saveAdmin();audit("Added admin task",i.value.trim());settings()};document.getElementById("clearAudit").onclick=()=>{adminState.audit=[];saveAdmin();settings()}}
+
+
+const ROLE_PERMS={
+ "Owner":{billing:true,mutate:true,support:true,flags:true,roles:true,export:true},
+ "Admin":{billing:true,mutate:true,support:true,flags:true,roles:false,export:true},
+ "Support":{billing:false,mutate:true,support:true,flags:false,roles:false,export:false},
+ "Read Only":{billing:true,mutate:false,support:false,flags:false,roles:false,export:false}
+};
+function currentPerm(){return ROLE_PERMS[document.getElementById("roleSelect")?.value||"Owner"]||ROLE_PERMS.Owner}
+function enforceRoleUI(){
+ const p=currentPerm(),role=document.getElementById("roleSelect")?.value||"Owner";
+ document.querySelectorAll("[data-requires]").forEach(el=>{const req=el.dataset.requires;el.classList.toggle("roleLock",!p[req]);el.title=!p[req]?`${role} does not have permission for this action.`:""});
+}
 
 const adminCommands=[
 {label:"Overview",sub:"Command Center",icon:"⌂",go:()=>navigate("overview")},
@@ -260,8 +352,74 @@ const adminNotices=[
 function renderNotifications(){document.getElementById("notifyPanel").innerHTML=`<div class="sectionHead"><h3>Admin notifications</h3><button class="btn ghost" id="closeNotify">Close</button></div>${adminNotices.map((n,i)=>`<div class="noticeItem" data-notice="${i}"><div>${n[0]}</div><div><strong>${n[1]}</strong><span>${n[2]}</span></div></div>`).join("")}`;document.querySelectorAll("[data-notice]").forEach(x=>x.onclick=()=>{navigate(adminNotices[+x.dataset.notice][3]);document.getElementById("notifyPanel").classList.add("hidden")});document.getElementById("closeNotify").onclick=()=>document.getElementById("notifyPanel").classList.add("hidden")}
 document.getElementById("notifyBtn").onclick=()=>{renderNotifications();document.getElementById("notifyPanel").classList.toggle("hidden")};
 
+
+function buildDataContract(){
+ const b=businesses[0];
+ return {
+   version:"0.2",
+   generated_at:new Date().toISOString(),
+   account:{id:"acct_demo_001",email:b.email,role:"owner",plan:b.plan,status:"active"},
+   business:{
+     id:"biz_demo_001",
+     name:b.name,
+     profile:{owner:b.owner,email:b.email,industry:b.industry,description:b.description,readiness:b.ready},
+     subscription:{plan:b.plan,status:"active",google_connection:b.google},
+     goals:{monthly_revenue:b.goal},
+     actuals:{latest_revenue:b.revenue,customers:b.customers},
+     offerings:{count:b.offers},
+     kpis:{available:b.kpis},
+     activity:{last_active:b.last},
+     support:{open_conversations:b.support}
+   },
+   permissions:{customer_can_read:true,admin_can_read:true,support_can_read_context:true},
+   endpoints:{
+     business:"GET /v1/businesses/:id",
+     kpis:"GET /v1/businesses/:id/kpis",
+     financials:"GET /v1/businesses/:id/financials",
+     conversations:"GET /v1/conversations?business_id=:id",
+     messages:"POST /v1/conversations/:id/messages",
+     subscription:"GET /v1/accounts/:id/subscription",
+     events:"POST /v1/events"
+   }
+ };
+}
+function syntaxHighlight(obj){let json=JSON.stringify(obj,null,2).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\\s*:)?|\\b(true|false|null)\\b|-?\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d+)?)/g,m=>{let cls="jsonNum";if(/^"/.test(m))cls=/:$/.test(m)?"jsonKey":"jsonStr";else if(/true|false/.test(m))cls="jsonBool";return `<span class="${cls}">${m}</span>`})}
+const contractSamples={
+ "Business 360":()=>buildDataContract(),
+ "Business Profile":()=>buildDataContract().business.profile,
+ "Subscription":()=>buildDataContract().business.subscription,
+ "KPI Summary":()=>({business_id:"biz_demo_001",metrics:[{key:"revenue",value:8200,target:10000,status:"watch"},{key:"readiness",value:92,target:90,status:"good"}]}),
+ "Support Conversation":()=>({conversation_id:"conv_001",business_id:"biz_demo_001",status:"waiting_on_us",messages:[{sender:"customer",body:"Why is my gross margin different?",created_at:new Date().toISOString()}]}),
+ "Event":()=>({event_id:"evt_001",account_id:"acct_demo_001",business_id:"biz_demo_001",name:"monthly_checkin_saved",occurred_at:new Date().toISOString(),properties:{month:"2026-08"}})
+};
+
 function bindRows(){document.querySelectorAll("[data-biz]").forEach(r=>r.onclick=()=>business360(businesses.find(b=>b.id==r.dataset.biz)));bindJumps()}
 function bindJumps(){document.querySelectorAll("[data-jump]").forEach(b=>b.onclick=()=>navigate(b.dataset.jump))}
-function navigate(v){current=v;document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===v));({overview,customers,businesses:businessesView,revenue,subscriptions,support,analytics,success,feedback,health,content:contentAdmin,operations,settings}[v]||overview)();bindJumps()}
-document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>navigate(b.dataset.view));document.getElementById("roleSelect").onchange=e=>{document.body.dataset.role=e.target.value;alert("Role simulator: "+e.target.value+"\\nReal permissions will be enforced by the backend later.")};navigate("overview");
+async function navigate(v){
+ current=v;
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
+ const loaders={
+   overview:()=>AdminAPI.getOverview(),
+   customers:()=>AdminAPI.getCustomers(),
+   businesses:()=>AdminAPI.getBusinesses(),
+   revenue:()=>AdminAPI.getRevenue(),
+   subscriptions:()=>AdminAPI.getSubscriptions(),
+   support:()=>AdminAPI.getSupportThreads(),
+   analytics:()=>AdminAPI.getAnalytics(),
+   success:()=>AdminAPI.getCustomerSuccess(),
+   feedback:()=>AdminAPI.getFeedback(),
+   content:()=>AdminAPI.getAnnouncements(),
+   operations:()=>AdminAPI.getOperations(),
+   settings:()=>AdminAPI.getFeatureFlags(),
+   architecture:()=>AdminAPI.getContract(),
+   health:()=>Promise.resolve({ok:true})
+ };
+ if(loaders[v]){
+   renderLoading("Loading "+v.replace(/([A-Z])/g," $1")+"…");
+   try{await loaders[v]()}catch(err){renderApiError(err,v);return}
+ }
+ ({overview,customers,businesses:businessesView,revenue,subscriptions,support,analytics,success,feedback,health,content:contentAdmin,operations,architecture,settings}[v]||overview)();
+ bindJumps();setTimeout(enforceRoleUI,0)
+}
+setApiMode(apiMode);document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>navigate(b.dataset.view));document.getElementById("roleSelect").onchange=e=>{document.body.dataset.role=e.target.value;alert("Role simulator: "+e.target.value+"\\nReal permissions will be enforced by the backend later.")};navigate("overview");
 </script></body></html>

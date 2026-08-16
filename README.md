@@ -1,46 +1,60 @@
-# YasReady Admin — Business 360 Build 4
+# YasReady Admin — Business 360 Build 5 — API-Ready Architecture
 
 ## DESTINATION
 ADMIN GITHUB ONLY — `yasready-admin`
 
 DO NOT upload to the customer YasReady GitHub.
 
-## Build 4
-- Fixed Customer Health score bubbles so they remain true circles at all responsive sizes
-- Global admin search / Command Palette (Cmd/Ctrl + K)
-- Admin notification center
-- Saved business views
-- Mock bulk actions
-- Operations center
-- Release control for Customer Web / Admin / future iOS / Android
-- Reusable support macros
-- Expanded admin task workflow
-- Stronger visibility into what now requires real backend infrastructure
+## Purpose
+Build 5 freezes the admin frontend architecture before real Cloudflare services are introduced.
 
-## Retained from Builds 1–3
-- Command Center
-- Customers CRM
-- Businesses + Business 360
-- Revenue + subscriptions + dunning
-- Support Inbox + SLA
-- Product analytics + cohorts
-- Customer Success
-- Feedback & Requests
-- Announcements
-- System Health + API contract export
-- Notes, tags, feature flags, audit log, role concepts, CSV export
+## Added
+- AdminAPI abstraction layer
+- Major admin screens now pass through simulated API requests before rendering
+- Network latency simulation
+- Offline simulation
+- Fail-next-request simulation
+- Loading skeleton states
+- Error states
+- Retry workflow
+- Empty-state component
+- API Architecture admin screen
+- UI → endpoint map
+- Shared customer/admin/app data contract inspector
+- Exportable shared data contract JSON
+- Role/permission matrix
+- UI permission simulation
+- Stronger owner/admin/support/read-only separation
+- API/backend architecture made explicit in-product
 
-## Stop line
-At this point the admin UX is substantially defined.
-Further meaningful work requires real shared services:
-- authentication and roles
-- customer/business database
-- Stripe billing
-- real support/chat
-- event ingestion
-- notification delivery
-- cross-device state
-- iOS/Android clients
+## Key design principle
+The UI should not care whether data comes from:
+- local mock data today
+- Cloudflare Workers/D1 tomorrow
+- iOS/Android clients later
 
-## Architecture
-Customer Web + Admin Web + iOS + Android -> YasReady API -> Cloudflare/backend services
+All clients should target the same canonical YasReady API/data model.
+
+## Shared-client architecture
+Customer Web
+Admin Web
+iOS
+Android
+   ↓
+YasReady API
+   ↓
+Cloudflare / billing / realtime / notification services
+
+## Build 6
+The next meaningful admin build should stop mocking the data layer and begin real shared backend infrastructure.
+
+Recommended next phase:
+- authentication
+- account/business persistence
+- shared API
+- admin authorization
+- migration strategy
+- real support persistence
+- billing/webhooks after identity/data foundation
+
+Customer YasReady remains a separate repository/version line.
