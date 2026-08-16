@@ -190,11 +190,28 @@ body.ipadMode .ipadDock button.attn{background:#171719;color:#fff;border-color:#
 body.ipadMode .clickrow{cursor:pointer}
 body.ipadMode .clickrow:active,body.ipadMode .thread:active,body.ipadMode .commandItem:active{background:#f2f0ff}
 
+
+/* === BUSINESS 360 BUILD 5.2 — PRE-CLOUDFLARE QA HARDENING === */
+:root{--safe-bottom:env(safe-area-inset-bottom,0px);--safe-top:env(safe-area-inset-top,0px)}
+body{min-width:320px}
+button,input,select,textarea{max-width:100%}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(108,85,255,.28);outline-offset:2px}
+.tableWrap{-webkit-overflow-scrolling:touch}
+.card,.metric,.statePanel,.apiMapCard,.releaseCard,.macro,.request,.teamCard,.flagCard{min-width:0}
+.metric strong,.kpiMini strong,.opsCard strong,.sub,td,th,.row span,.row strong{overflow-wrap:anywhere}
+.qaFooter{margin:34px 0 8px;color:#96969c;font-size:10px;text-align:center}
+.adminModeBadge{display:inline-flex;padding:5px 7px;border-radius:999px;background:#eefbe0;color:#476000;font-size:9px;font-weight:900}
+.roleWarning{background:#fff2db;border:1px solid #ead39c;border-radius:12px;padding:10px 12px;font-size:10px;color:#6f5515;margin-bottom:10px}
+.emptyAction{margin-top:12px}
+body.ipadMode .composer{padding-bottom:calc(14px + var(--safe-bottom))}
+body.ipadMode .ipadDock{padding-bottom:calc(10px + var(--safe-bottom))}
+@media(max-width:520px){.top{padding-left:12px;padding-right:12px}.brand{font-size:18px}#roleSelect{max-width:110px}.avatar{display:none}main{padding:14px}.metric strong{font-size:23px}}
+
 </style>
 </head>
 <body><div class="app">
-<div id="offlineBanner" class="offlineBanner">Offline simulation active — AdminAPI is returning local mock data.</div><header class="top"><div class="brand">YasReady<span>.</span></div><div class="adminPill">ADMIN · BUSINESS 360 BUILD 5.1</div>
-<div class="topRight"><span class="ipadHint">IPAD COMMAND CENTER</span><button class="modeToggle" id="ipadModeToggle">iPad Mode</button><div class="globalSearch"><input id="globalSearchInput" placeholder="Search businesses, customers, support…  ⌘K"><span class="searchIcon">⌕</span></div><button class="notifyBtn" id="notifyBtn">🔔<span class="notifyDot"></span></button><select id="roleSelect" class="secondary btn"><option>Owner</option><option>Admin</option><option>Support</option><option>Read Only</option></select><div class="avatar">W</div></div></header>
+<div id="offlineBanner" class="offlineBanner">Offline simulation active — AdminAPI is returning local mock data.</div><header class="top"><div class="brand">YasReady<span>.</span></div><div class="adminPill">ADMIN · BUSINESS 360 BUILD 5.2</div>
+<div class="topRight"><span class="adminModeBadge">QA STABLE</span><span class="ipadHint">IPAD COMMAND CENTER</span><button class="modeToggle" id="ipadModeToggle">iPad Mode</button><div class="globalSearch"><input id="globalSearchInput" placeholder="Search businesses, customers, support…  ⌘K"><span class="searchIcon">⌕</span></div><button class="notifyBtn" id="notifyBtn">🔔<span class="notifyDot"></span></button><select id="roleSelect" class="secondary btn"><option>Owner</option><option>Admin</option><option>Support</option><option>Read Only</option></select><div class="avatar">W</div></div></header>
 <div id="notifyPanel" class="notifyPanel hidden"></div>
 <div id="commandBackdrop" class="commandBackdrop hidden"><div class="commandBox"><input id="commandInput" placeholder="Jump anywhere in YasReady Admin…"><div id="commandResults" class="commandResults"></div></div></div><div class="layout"><aside><div class="nav">
 <div class="navTitle">Command Center</div>
@@ -203,7 +220,7 @@ body.ipadMode .clickrow:active,body.ipadMode .thread:active,body.ipadMode .comma
 <div class="navTitle">Customer Success</div><button data-view="support">Support Inbox <span class="count">4</span></button>
 <div class="navTitle">Intelligence</div><button data-view="analytics">Product Analytics</button><button data-view="success">Customer Success</button><button data-view="feedback">Feedback & Requests</button><button data-view="health">System Health</button>
 <div class="navTitle">Admin</div><button data-view="content">Announcements</button><button data-view="operations">Operations</button><button data-view="architecture">API Architecture</button><button data-view="settings">Settings</button>
-</div></aside><main><div id="ipadDock" class="ipadDock"><button class="attn" data-dock="overview">Needs Attention</button><button data-dock="support">Support</button><button data-dock="businesses">Businesses</button><button data-dock="revenue">Revenue</button><button data-dock="success">Customer Success</button><button data-dock="operations">Operations</button></div><div id="content"></div></main></div></div>
+</div></aside><main><div id="ipadDock" class="ipadDock"><button class="attn" data-dock="overview">Needs Attention</button><button data-dock="support">Support</button><button data-dock="businesses">Businesses</button><button data-dock="revenue">Revenue</button><button data-dock="success">Customer Success</button><button data-dock="operations">Operations</button></div><div id="content"></div><div class="qaFooter">Business 360 Build 5.2 · Pre-Cloudflare QA Stable</div></main></div></div>
 <script>
 const money=n=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n);
 const plans={free:"Free",run:"$9.99 Run",connect:"$19.99 Connect"};
@@ -258,11 +275,11 @@ const AdminAPI={
   async getAudit(){await this.wait();return structuredClone(adminState.audit)},
   async getContract(){await this.wait();return buildDataContract()}
 };
-function setApiMode(mode){apiMode=mode;localStorage.setItem(API_MODE_KEY,mode);apiState.offline=mode==="offline";document.getElementById("offlineBanner")?.classList.toggle("show",apiState.offline)}
+function setApiMode(mode){if(!["mock","slow","offline"].includes(mode))mode="mock";apiMode=mode;localStorage.setItem(API_MODE_KEY,mode);apiState.offline=mode==="offline";document.getElementById("offlineBanner")?.classList.toggle("show",apiState.offline)}
 function simulateNextApiFailure(){apiState.failNext=true}
 function renderLoading(title="Loading YasReady Admin…"){content.innerHTML=`<div class="statePanel"><span class="eyebrow">AdminAPI</span><h3>${title}</h3><div style="display:grid;gap:10px;margin-top:16px"><div class="skeleton" style="width:42%"></div><div class="skeleton" style="width:88%"></div><div class="skeleton" style="width:72%"></div><div class="skeleton" style="width:93%"></div></div></div>`}
 function renderApiError(err,retryView){const offline=String(err?.message||err).includes("OFFLINE");content.innerHTML=`<div class="statePanel"><span class="eyebrow">${offline?"Offline":"AdminAPI error"}</span><h3>${offline?"YasReady Admin can't reach the data layer.":"Something went wrong loading this admin view."}</h3><p>${offline?"This is the exact kind of state the real Cloudflare-backed admin must handle gracefully.":"The simulated API returned an error. No admin data was destroyed."}</p><div class="stateActions"><button class="btn primary" id="retryApi">Retry</button><button class="btn secondary" data-jump="overview">Back to Overview</button></div></div>`;document.getElementById("retryApi").onclick=()=>navigate(retryView);bindJumps()}
-function renderEmpty(title,copy){return `<div class="statePanel"><span class="eyebrow">Nothing here yet</span><h3>${title}</h3><p>${copy}</p></div>`}
+function renderEmpty(title,copy,actionLabel="",actionView="overview"){return `<div class="statePanel"><span class="eyebrow">Nothing here yet</span><h3>${title}</h3><p>${copy}</p>${actionLabel?`<button class="btn secondary emptyAction" data-empty-go="${actionView}">${actionLabel}</button>`:""}</div>`}
 
 adminState.savedViews=adminState.savedViews||["All Businesses","Churn Risk","Connect Ready","Needs Follow-up"];
 adminState.announcements=adminState.announcements||[];
@@ -336,7 +353,14 @@ function revenue(){content.innerHTML=`<span class="eyebrow">Revenue</span><h1>Mo
 <div class="sectionHead"><h2>Failed-payment recovery</h2></div><section class="card"><div class="dunningList">${adminState.dunning.map(d=>`<div class="dunningRow"><div><strong>${d.business}</strong><span>${money(d.amount)} · ${d.status}</span></div><span class="attempt">Attempt ${d.attempt}</span><button class="btn secondary" data-retry="${d.business}">Mock retry</button></div>`).join("")}</div></section>
 <div class="sectionHead"><h2>Recent transactions</h2><button class="btn secondary" id="exportRevenue" data-requires="export">Export CSV</button></div><div class="tableWrap"><table class="table"><thead><tr><th>Date</th><th>Business</th><th>Event</th><th>Amount</th><th>Status</th></tr></thead><tbody>${[["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"],["Aug 15","Northside Mobile Detail","Run renewal",9.99,"Paid"],["Aug 15","Glow Reiki","Upgrade attempt",9.99,"Failed"]].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>$${r[3].toFixed(2)}</td><td><span class="pill ${r[4]==="Paid"?"good":"bad"}">${r[4]}</span></td></tr>`).join("")}</tbody></table></div>`;document.getElementById("exportRevenue").onclick=()=>{csvDownload("yasready-revenue.csv",[["Date","Business","Event","Amount","Status"],["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"]]);audit("Exported revenue CSV")};document.querySelectorAll("[data-retry]").forEach(x=>x.onclick=()=>{const d=adminState.dunning.find(v=>v.business===x.dataset.retry);d.attempt++;d.status="Retry queued";saveAdmin();audit("Queued payment retry",d.business);revenue()})}
 function subscriptions(){content.innerHTML=`<span class="eyebrow">Subscriptions</span><h1>Plans & billing.</h1><div class="grid4">${metric("Free","88","68.7%")}${metric("$9.99 Run","24","18.8%")}${metric("$19.99 Connect","16","12.5%")}${metric("Churn","2.1%","Mock 30d")}</div>${tableBiz()}`;bindRows()}
-function support(){content.innerHTML=`<span class="eyebrow">Support</span><h1>Talk where the business lives.</h1><p class="sub">Customer context, statuses, internal workflow, and replies in one place.</p><div class="sectionHead"><div class="toolbar"><select id="supportStatus"><option>All statuses</option><option>New</option><option>Waiting on us</option><option>Waiting on customer</option><option>Resolved</option></select><button class="btn secondary" id="supportMacro">Insert macro</button></div><span class="pill warn">4 open</span></div><div class="inbox"><div class="threads">${threads.map(t=>`<div class="thread ${t.id===selectedThread.id?"active":""}" data-thread="${t.id}"><strong>${t.name}</strong><p>${t.subject}</p><small>${t.status} · ${t.time}</small></div>`).join("")}</div><div class="chat"><div class="chatHead"><strong>${selectedThread.name}</strong><br><small>${selectedThread.subject}</small><div style="margin-top:8px"><button class="btn ghost" id="openContext">Open Business 360</button><button class="btn ghost" id="resolveThread">Mark resolved</button></div></div><div class="messages">${selectedThread.messages.map(m=>`<div class="bubble ${m[0]==="admin"?"admin":""}">${m[1]}</div>`).join("")}</div><div class="composer"><textarea id="reply" placeholder="Reply to customer…"></textarea><button class="btn primary" id="sendReply" data-requires="support">Send</button></div></div><aside class="supportContextPane" id="supportContextPane">
+function support(){
+if(!threads.length){
+  content.innerHTML=renderEmpty("No support conversations","When customer chat is connected, conversations will appear here.","Back to Overview","overview");
+  bindEmptyActions();
+  return;
+}
+if(!selectedThread || !threads.find(t=>t.id===selectedThread.id)) selectedThread=threads[0];
+content.innerHTML=`<span class="eyebrow">Support</span><h1>Talk where the business lives.</h1><span class="ipadHint" style="margin-top:8px">iPad landscape: threads · chat · business context</span><p class="sub">Customer context, statuses, internal workflow, and replies in one place.</p><div class="sectionHead"><div class="toolbar"><select id="supportStatus"><option>All statuses</option><option>New</option><option>Waiting on us</option><option>Waiting on customer</option><option>Resolved</option></select><button class="btn secondary" id="supportMacro">Insert macro</button></div><span class="pill warn">4 open</span></div><div class="inbox"><div class="threads">${threads.map(t=>`<div class="thread ${t.id===selectedThread.id?"active":""}" data-thread="${t.id}"><strong>${t.name}</strong><p>${t.subject}</p><small>${t.status} · ${t.time}</small></div>`).join("")}</div><div class="chat"><div class="chatHead"><strong>${selectedThread.name}</strong><br><small>${selectedThread.subject}</small><div style="margin-top:8px"><button class="btn ghost" id="openContext">Open Business 360</button><button class="btn ghost" id="resolveThread">Mark resolved</button></div></div><div class="messages">${selectedThread.messages.map(m=>`<div class="bubble ${m[0]==="admin"?"admin":""}">${m[1]}</div>`).join("")}</div><div class="composer"><textarea id="reply" placeholder="Reply to customer…"></textarea><button class="btn primary" id="sendReply" data-requires="support">Send</button></div></div><aside class="supportContextPane" id="supportContextPane">
         <span class="eyebrow">Business context</span>
         <h2 style="margin:7px 0 12px">${businesses.find(b=>b.id===selectedThread.biz)?.name||"Business"}</h2>
         <div class="contextMini"><span>Plan</span><strong>${plans[businesses.find(b=>b.id===selectedThread.biz)?.plan]||"—"}</strong></div>
@@ -367,7 +391,7 @@ document.querySelectorAll("[data-feedback]").forEach(x=>x.onclick=()=>{const f=a
 function health(){content.innerHTML=`<span class="eyebrow">System Health</span><h1>Know before customers do.</h1><div class="grid4">${metric("API","Healthy","Mock")}${metric("Database","Healthy","Mock D1")}${metric("Support realtime","Ready","Mock architecture")}${metric("Errors","0","Current local build")}</div><div class="notice">No production services are connected in Business 360 Build 1. These health cards intentionally represent the future monitoring surface, not fake live infrastructure.</div>`}
 
 function contentAdmin(){content.innerHTML=`<span class="eyebrow">Announcements</span><h1>Talk to customers inside YasReady.</h1><p class="sub">Prepare the product surface for release notes, maintenance notices, plan announcements, onboarding tips, and customer education without relying on email for everything.</p>
-<div class="grid2"><section class="card"><h2>Create announcement</h2><div class="field"><label>Audience</label><select id="announceAudience"><option>Everyone</option><option>Free</option><option>Run $9.99</option><option>Connect $19.99</option></select></div><div class="field" style="margin-top:10px"><label>Message</label><textarea id="announceText" placeholder="What's new in YasReady?"></textarea></div><button class="btn primary" data-requires="mutate" id="publishAnnouncement" style="margin-top:10px">Publish mock announcement</button></section>
+<div class="grid2"><section class="card"><h2>Create announcement</h2><div class="field"><label>Audience</label><select id="announceAudience"><option>Everyone</option><option>Free</option><option>Run $9.99</option><option>Connect $19.99</option></select></div><div class="field" style="margin-top:10px"><label>Message</label><textarea id="announceText" placeholder="What's new in YasReady?"></textarea></div><button class="btn primary" data-requires="mutate" data-requires="mutate" id="publishAnnouncement" style="margin-top:10px">Publish mock announcement</button></section>
 <section class="card"><h2>Future delivery channels</h2><div class="list"><div class="row"><strong>In-app banner</strong><span class="pill good">Buildable now</span></div><div class="row"><strong>Notification center</strong><span class="pill">API contract ready</span></div><div class="row"><strong>Push notification</strong><span class="pill warn">Apps/backend needed</span></div><div class="row"><strong>Email</strong><span class="pill warn">Backend needed</span></div></div></section></div>
 <div class="sectionHead"><h2>Published mock announcements</h2></div><div class="grid3">${adminState.announcements.map(a=>`<div class="announceCard"><strong>${a.text}</strong><span>${a.audience} · ${new Date(a.at).toLocaleString()}</span></div>`).join("")||'<div class="notice">No announcements yet.</div>'}</div>`;
 document.getElementById("publishAnnouncement").onclick=()=>{const t=document.getElementById("announceText").value.trim();if(!t)return;adminState.announcements.unshift({id:"a_"+Date.now(),audience:document.getElementById("announceAudience").value,text:t,at:new Date().toISOString()});saveAdmin();audit("Published mock announcement",t);contentAdmin()}}
@@ -401,16 +425,30 @@ function architecture(){content.innerHTML=`<span class="eyebrow">API-Ready Archi
 ].map(x=>`<div class="apiMapCard"><span>${x[0]}</span><strong>${x[1]}</strong><code>${x[2]}</code></div>`).join("")}</div></section>
 <div class="sectionHead"><h2>Shared data contract inspector</h2><button class="btn secondary" id="exportContract5">Export contract JSON</button></div>
 <div class="contractGrid"><aside class="contractNav">${Object.keys(contractSamples).map((k,i)=>`<button data-contract="${k}" class="${i===0?"active":""}">${k}</button>`).join("")}</aside><section class="jsonPanel"><pre id="contractJson"></pre></section></div>
+
+<section class="card" style="margin-top:14px">
+<span class="eyebrow">Pre-Cloudflare checklist</span><h2>What becomes real next.</h2>
+<div class="list">
+<div class="row"><strong>Authentication + sessions</strong><span class="pill bad">Not connected</span></div>
+<div class="row"><strong>Server-side admin authorization</strong><span class="pill bad">Not connected</span></div>
+<div class="row"><strong>Accounts + businesses persistence</strong><span class="pill bad">Not connected</span></div>
+<div class="row"><strong>Shared customer/admin records</strong><span class="pill bad">Not connected</span></div>
+<div class="row"><strong>Support conversations + messages</strong><span class="pill bad">Not connected</span></div>
+<div class="row"><strong>Audit + product events</strong><span class="pill bad">Not connected</span></div>
+<div class="row"><strong>Stripe billing state</strong><span class="pill warn">After identity/data</span></div>
+<div class="row"><strong>Push + email delivery</strong><span class="pill warn">After backend/apps</span></div>
+</div></section>
 <section class="card" style="margin-top:14px"><h2>Permission contract</h2><div class="permissionMatrix"><table><thead><tr><th>Capability</th><th>Owner</th><th>Admin</th><th>Support</th><th>Read Only</th></tr></thead><tbody>${[
 ["View customers","yes","yes","limited","yes"],["View billing","yes","yes","no","yes"],["Reply to support","yes","yes","yes","no"],["Edit admin notes","yes","yes","yes","no"],["Feature flags","yes","yes","no","no"],["Admin roles","yes","no","no","no"],["Export customer data","yes","yes","no","no"]
 ].map(r=>`<tr><td>${r[0]}</td>${r.slice(1).map(v=>`<td class="${v==="yes"?"permYes":v==="limited"?"permLimited":"permNo"}">${v==="yes"?"✓":v==="limited"?"Limited":"—"}</td>`).join("")}</tr>`).join("")}</tbody></table></div></section>`;
 const renderContract=name=>{document.querySelectorAll("[data-contract]").forEach(x=>x.classList.toggle("active",x.dataset.contract===name));document.getElementById("contractJson").innerHTML=syntaxHighlight(contractSamples[name]())};renderContract("Business 360");document.querySelectorAll("[data-contract]").forEach(x=>x.onclick=()=>renderContract(x.dataset.contract));document.querySelectorAll("[data-mode]").forEach(x=>x.onclick=()=>{const m=x.dataset.mode;apiState.latency=m==="slow"?1400:120;setApiMode(m);architecture()});document.getElementById("failNextApi").onclick=()=>{simulateNextApiFailure();alert("The next AdminAPI request will fail so you can test the error state.")};document.getElementById("exportContract5").onclick=()=>{const blob=new Blob([JSON.stringify(buildDataContract(),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="yasready-shared-data-contract-v0.2.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),400);audit("Exported shared data contract")}}
 
-function settings(){content.innerHTML=`<span class="eyebrow">Admin Settings</span><h1>Control the office.</h1><div class="notice"><strong>Browser / iPad Command Center:</strong> Use the iPad Mode button in the top-right to switch the same admin between full desktop and touch-optimized iPad layouts. Your choice is remembered on this device.</div>
+function settings(){content.innerHTML=`<span class="eyebrow">Admin Settings</span><h1>Control the office.</h1>
+<div class="grid4">${metric("DOM IDs","Clean","Static QA")}${metric("JS syntax","Clean","Node check")}${metric("API states","Testable","slow/offline/fail")}${metric("iPad mode","Ready","desktop toggle")}</div><div class="notice"><strong>Browser / iPad Command Center:</strong> Use the iPad Mode button in the top-right to switch the same admin between full desktop and touch-optimized iPad layouts. Your choice is remembered on this device.</div>
 <div class="grid2"><section class="card"><h2>Admin role simulator</h2><p class="sub">Conceptual access model before real authentication exists.</p><div class="roleGrid"><div class="roleCard"><strong>Owner</strong><ul><li>Everything</li><li>Billing</li><li>Roles</li></ul></div><div class="roleCard"><strong>Admin</strong><ul><li>Customers</li><li>Business 360</li><li>Support</li></ul></div><div class="roleCard"><strong>Support</strong><ul><li>Support</li><li>Read customer context</li></ul></div><div class="roleCard"><strong>Read Only</strong><ul><li>Dashboards</li><li>No mutations</li></ul></div></div></section>
 <section class="card"><h2>Backend status</h2><div class="list"><div class="row"><strong>Customer API</strong><span class="pill warn">Not connected</span></div><div class="row"><strong>Cloudflare D1</strong><span class="pill warn">Not connected</span></div><div class="row"><strong>Billing</strong><span class="pill warn">Mock only</span></div><div class="row"><strong>Realtime support</strong><span class="pill warn">Mock only</span></div></div></section></div>
 <div class="grid2" style="margin-top:14px"><section class="card"><h2>Feature flags</h2><div class="flagGrid">${Object.entries(adminState.flags).map(([k,v])=>`<div class="flagCard"><strong>${k}</strong><span>Mock product rollout control</span><div class="switch"><button class="${v?"on":""}" data-flag="${k}" data-requires="flags" data-v="true">On</button><button class="${!v?"on":""}" data-flag="${k}" data-requires="flags" data-v="false">Off</button></div></div>`).join("")}</div></section>
-<section class="card"><h2>Admin tasks</h2><div id="adminTaskList" class="adminTasks"></div><div class="toolbar" style="margin-top:10px"><input id="adminTaskInput" placeholder="Add internal task…"><button class="btn secondary" id="addAdminTask">Add</button></div></section></div>
+<section class="card"><h2>Admin tasks</h2><div id="adminTaskList" class="adminTasks"></div><div class="toolbar" style="margin-top:10px"><input id="adminTaskInput" placeholder="Add internal task…"><button class="btn secondary" id="addAdminTask" data-requires="mutate">Add</button></div></section></div>
 <section class="card" style="margin-top:14px"><div class="sectionHead"><h2>Audit log</h2><button class="btn secondary" id="clearAudit">Clear local audit</button></div><div class="auditList">${adminState.audit.slice(0,20).map(a=>`<div class="auditItem"><time>${new Date(a.at).toLocaleString()}</time><strong>${a.action}<span>${a.detail||""}</span></strong><span class="auditActor">${a.actor}</span></div>`).join("")||'<div class="notice">No local admin actions logged yet.</div>'}</div></section>
 <section class="card" style="margin-top:14px"><h2>Admin team</h2><div class="teamGrid"><div class="teamCard"><strong>William</strong><span>Owner</span></div><div class="teamCard"><strong>Future Admin</strong><span>Admin</span></div><div class="teamCard"><strong>Future Support</strong><span>Support</span></div><div class="teamCard"><strong>Analyst</strong><span>Read Only</span></div></div></section>
 <section class="card" style="margin-top:14px"><div class="sectionHead"><h2>API-ready admin</h2><button class="btn secondary" data-jump="architecture">Open architecture inspector</button></div><p class="sub">Business 360 Build 5 routes admin data through the AdminAPI abstraction so Cloudflare can replace the local mock adapter later without redesigning the UI.</p></section>
@@ -451,6 +489,27 @@ applyIpadMode(savedIpad);
 if(!localStorage.getItem(IPAD_MODE_KEY) && window.matchMedia("(min-width:700px) and (max-width:1180px)").matches){
   const btn=document.getElementById("ipadModeToggle");
   if(btn){btn.textContent="Try iPad Mode";btn.title="This layout looks like an iPad-sized browser. Tap to optimize YasReady Admin for touch."}
+}
+
+
+function hardenRoleUI(){
+  const role=document.getElementById("roleSelect")?.value||"Owner";
+  const perms=typeof currentPerm==="function"?currentPerm():{billing:true,mutate:true,support:true,flags:true,roles:true,export:true};
+  document.querySelectorAll("[data-requires]").forEach(el=>{
+    const req=el.dataset.requires;
+    const allowed=!!perms[req];
+    if("disabled" in el) el.disabled=!allowed;
+    el.setAttribute("aria-disabled",allowed?"false":"true");
+    el.title=allowed?"":role+" does not have permission for this action.";
+  });
+  document.getElementById("rolePageWarning")?.remove();
+  if(role==="Read Only"){
+    const n=document.createElement("div");
+    n.id="rolePageWarning";
+    n.className="roleWarning";
+    n.textContent="Read Only mode: actions that change customer or admin data are disabled.";
+    content.prepend(n);
+  }
 }
 
 const adminCommands=[
@@ -518,8 +577,16 @@ const contractSamples={
 };
 
 function bindRows(){document.querySelectorAll("[data-biz]").forEach(r=>r.onclick=()=>business360(businesses.find(b=>b.id==r.dataset.biz)));bindJumps()}
-function bindJumps(){document.querySelectorAll("[data-jump]").forEach(b=>b.onclick=()=>navigate(b.dataset.jump))}
+function bindJumps(){
+  document.querySelectorAll("[data-jump]").forEach(b=>b.onclick=()=>navigate(b.dataset.jump));
+  bindEmptyActions();
+}
+function bindEmptyActions(){
+  document.querySelectorAll("[data-empty-go]").forEach(b=>b.onclick=()=>navigate(b.dataset.emptyGo));
+}
 async function navigate(v){
+ const allowedViews=["overview","customers","businesses","revenue","subscriptions","support","analytics","success","feedback","health","content","operations","architecture","settings"];
+ if(!allowedViews.includes(v)) v="overview";
  current=v;
  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
  const loaders={
@@ -543,7 +610,7 @@ async function navigate(v){
    try{await loaders[v]()}catch(err){renderApiError(err,v);return}
  }
  ({overview,customers,businesses:businessesView,revenue,subscriptions,support,analytics,success,feedback,health,content:contentAdmin,operations,architecture,settings}[v]||overview)();
- bindJumps();setTimeout(enforceRoleUI,0)
+ bindJumps();setTimeout(()=>{enforceRoleUI();hardenRoleUI()},0)
 }
 setApiMode(apiMode);document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>navigate(b.dataset.view));document.getElementById("roleSelect").onchange=e=>{document.body.dataset.role=e.target.value;alert("Role simulator: "+e.target.value+"\\nReal permissions will be enforced by the backend later.")};navigate("overview");
 </script></body></html>

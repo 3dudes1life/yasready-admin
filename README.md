@@ -1,31 +1,47 @@
-# YasReady Admin — Business 360 Build 5.1 — Browser / iPad Command Center
+# YasReady Admin — Business 360 Build 5.2 — Pre-Cloudflare QA Stable
 
 ## DESTINATION
 ADMIN GITHUB ONLY — `yasready-admin`
 
-DO NOT upload this build to the customer YasReady GitHub.
+DO NOT upload to the customer YasReady GitHub.
 
-## What Build 5.1 adds
-- One-tap iPad Mode / Desktop Mode toggle
-- Mode preference remembered on the device
-- Full desktop/browser admin preserved
-- iPad touch targets enlarged
-- iPad typography, spacing, grids, cards and tables optimized
-- iPad sticky action dock:
-  Needs Attention / Support / Businesses / Revenue / Customer Success / Operations
-- iPad landscape Support Command Desk:
-  conversations + active chat + live business context
-- iPad portrait support layout adapts automatically
-- No hover-only dependency for important iPad interactions
-- Inputs/composer sized for iPad keyboard and touch
-- Existing Build 5 AdminAPI / API contract / permissions / offline states retained
+## Final frontend hardening before Cloudflare
+- Desktop/browser responsive pass
+- iPad safe-area and touch pass
+- Small-screen hardening
+- Keyboard focus visibility
+- Route validation and safe fallback
+- API-mode validation
+- Support empty-state protection
+- Selected-thread guard
+- Stronger role / disabled-action behavior
+- Read Only warning state
+- Empty-state action binder
+- Pre-Cloudflare architecture checklist
+- QA status visible in Settings
+- Build 5 AdminAPI architecture retained
+- Build 5.1 iPad Command Center retained
 
-## Core requirement
-YasReady Admin must be comfortable to run all day from Safari on an iPad.
+## Stop line
+After Build 5.2, major mock admin feature development should stop.
 
-Desktop remains the full office dashboard.
-iPad Mode turns the same app into a touch-first support and operations terminal.
+Next meaningful phase:
+1. Authentication
+2. Account/business persistence
+3. Shared YasReady API
+4. Server-side authorization
+5. Shared customer/admin data
+6. Persistent support/realtime
+7. Event/audit ingestion
+8. Stripe billing
+9. Notifications
+10. iOS/Android clients against the same API
 
-## Backend status
-Still local/mock.
-Cloudflare/auth/database/billing/realtime are intentionally not connected yet.
+## Architecture
+Customer Web + Admin Web + iOS + Android
+                ↓
+            YasReady API
+                ↓
+      Cloudflare/shared services
+
+This is the recommended pre-Cloudflare admin baseline.
