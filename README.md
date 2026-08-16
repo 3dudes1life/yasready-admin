@@ -1,35 +1,64 @@
-# YasReady Admin — Business 360 Build 2
+# YasReady Admin — Business 360 Build 3
 
 ## DESTINATION
-ADMIN GITHUB ONLY — repo: `yasready-admin`
+ADMIN GITHUB ONLY — `yasready-admin`
 
-DO NOT upload to the customer YasReady GitHub.
+DO NOT upload this ZIP to the customer YasReady GitHub.
 
-## Build 2 adds
-- Business segmentation filters + CSV export
-- Business 360 with functional tabs:
-  Overview / Workspace / KPIs / Financials / Activity / Support / Subscription
-- Local admin notes persistence
-- Business tags: VIP / Churn Risk / Connect Ready / Needs Follow-up
-- Churn / opportunity / healthy signals on Overview
-- Enhanced Support Inbox:
-  reply, resolve, macro, Business 360 context
-- Revenue transactions + CSV export
-- Retention cohort analytics surface
-- Feature flags
-- Admin task list
-- Local admin audit log
-- Expanded conceptual role model
-- More explicit backend/API contract surfaces
+## Build 3 pushes admin to the edge of where real backend work becomes necessary
 
-## Still mock/local by design
-No real accounts, Cloudflare API, D1, Stripe, realtime chat, email, Google sync, or production analytics.
+Added:
+- Customer health scoring surfaces
+- Lifecycle segmentation
+- Proactive customer-success queue
+- Success playbooks
+- Churn-risk / expansion-ready workflows
+- Support SLA metrics
+- Failed-payment / dunning workflow simulation
+- Feedback + feature request queue
+- Request voting/status progression
+- In-app announcement management
+- Future notification delivery surfaces
+- API contract / backend resource map
+- API contract JSON export
+- Admin team surface
+- Expanded permissions concepts
+- Existing Business 360 tabs, notes, tags, support, analytics, audit, tasks, feature flags, and CSV exports retained
 
-## Architecture target
-Customer web + iOS + Android + Admin -> shared YasReady API -> Cloudflare backend services.
+## Backend resources now clearly implied
+accounts
+businesses
+business_profiles
+offerings
+costs
+goals
+monthly_actuals
+kpis
+tasks
+activity
+subscriptions
+conversations
+messages
+notifications
+events
+admin_notes
+feature_flags
 
-## Naming
-This is ADMIN product numbering:
-Business 360 Build 2
+## Shared-client architecture
+Customer Web + Admin Web + iOS + Android
+                ↓
+          YasReady API
+                ↓
+ Cloudflare auth/data/realtime/billing integrations
 
-Customer YasReady remains a separate build/version line.
+## What should NOT be faked much further
+- real users/authentication
+- real customer records
+- real Stripe money
+- real chat delivery
+- real push/email notifications
+- real feature-entitlement enforcement
+- real audit/security
+- real cross-device synchronization
+
+Business 360 Build 3 is intentionally the point where the admin UX is mostly defined and the next major step should become shared backend/API infrastructure.
