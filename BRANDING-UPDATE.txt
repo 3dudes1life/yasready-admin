@@ -1,0 +1,10 @@
+ADMIN GITHUB — YasReady Admin / Business 360
+Branding-only update from Business 360 Build 5.2.
+
+Applied YasReady brand direction #2:
+- YasReady. wordmark with Ready Lime period
+- Custom geometric Y + lime status dot app/favicon mark
+- Updated admin header branding
+- No AdminAPI simulation, support, Business 360, iPad mode, or admin functionality intentionally changed
+
+KEEP THIS REPOSITORY 100% SEPARATE FROM CUSTOMER GITHUB.
