@@ -1,0 +1,127 @@
+YASREADY ADMIN BUSINESS 360 — BUILD 5.3.1 FULL CLICK QA
+
+RESULT: PASS
+
+This build was tested in headless Chromium against the actual admin UI.
+
+Coverage includes:
+- Every top-level admin route
+- Every sidebar route
+- Desktop ↔ iPad Mode
+- Every iPad command dock route
+- Businesses search, entry-path filter, stage filter
+- Business row → Business 360
+- All 8 Business 360 tabs
+- Business tag toggle
+- Support thread selection, macro, reply, resolve
+- Customer row → Business 360
+- Subscription row → Business 360
+- Revenue mock retry / CSV control
+- Product Analytics
+- Customer Success
+- Feedback & Requests
+- System Health
+- Announcements
+- Operations
+- API Architecture
+- Settings role simulator
+- Global search
+- Embedded JavaScript syntax validation
+
+AUTOMATED RESULTS
+PASSES 94
+PASS: Route overview
+PASS: Route customers
+PASS: Route businesses
+PASS: Route revenue
+PASS: Route subscriptions
+PASS: Route support
+PASS: Route analytics
+PASS: Route success
+PASS: Route feedback
+PASS: Route health
+PASS: Route content
+PASS: Route operations
+PASS: Route architecture
+PASS: Route settings
+PASS: Sidebar exists overview
+PASS: Sidebar click overview
+PASS: Sidebar exists customers
+PASS: Sidebar click customers
+PASS: Sidebar exists businesses
+PASS: Sidebar click businesses
+PASS: Sidebar exists revenue
+PASS: Sidebar click revenue
+PASS: Sidebar exists subscriptions
+PASS: Sidebar click subscriptions
+PASS: Sidebar exists support
+PASS: Sidebar click support
+PASS: Sidebar exists analytics
+PASS: Sidebar click analytics
+PASS: Sidebar exists success
+PASS: Sidebar click success
+PASS: Sidebar exists feedback
+PASS: Sidebar click feedback
+PASS: Sidebar exists health
+PASS: Sidebar click health
+PASS: Sidebar exists content
+PASS: Sidebar click content
+PASS: Sidebar exists operations
+PASS: Sidebar click operations
+PASS: Sidebar exists architecture
+PASS: Sidebar click architecture
+PASS: Sidebar exists settings
+PASS: Sidebar click settings
+PASS: iPad Mode on
+PASS: iPad dock overview
+PASS: iPad dock support
+PASS: iPad dock businesses
+PASS: iPad dock revenue
+PASS: iPad dock success
+PASS: iPad dock operations
+PASS: iPad Mode off
+PASS: Business rows render
+PASS: Business search
+PASS: Path filter
+PASS: Stage filter
+PASS: Open Business 360
+PASS: 360 tab exists overview
+PASS: 360 tab click overview
+PASS: 360 tab exists lifecycle
+PASS: 360 tab click lifecycle
+PASS: 360 tab exists workspace
+PASS: 360 tab click workspace
+PASS: 360 tab exists kpis
+PASS: 360 tab click kpis
+PASS: 360 tab exists financials
+PASS: 360 tab click financials
+PASS: 360 tab exists activity
+PASS: 360 tab click activity
+PASS: 360 tab exists support
+PASS: 360 tab click support
+PASS: 360 tab exists subscription
+PASS: 360 tab click subscription
+PASS: Business tag toggle
+PASS: Support threads render
+PASS: Support thread click
+PASS: Support macro
+PASS: Send support reply
+PASS: Resolve support thread
+PASS: customers row opens 360
+PASS: subscriptions row opens 360
+PASS: Revenue mock retry
+PASS: Revenue CSV export button
+PASS: Admin section analytics
+PASS: Admin section success
+PASS: Admin section feedback
+PASS: Admin section health
+PASS: Admin section content
+PASS: Admin section operations
+PASS: Admin section architecture
+PASS: Role Owner
+PASS: Role Admin
+PASS: Role Support
+PASS: Role Read Only
+PASS: Role Owner
+PASS: Global search input
+FAILURES 0
