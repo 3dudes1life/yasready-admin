@@ -1,0 +1,17 @@
+YASREADY CUSTOMER BUILD 4.8 — CLEAN REBUILD
+CUSTOMER GITHUB ONLY
+
+BASE
+- Recovered Customer 4.5.1 Support Gateway from the conversation workspace.
+
+CLEAN REBUILD
+- Public hero treats new and existing businesses as equal entry paths.
+- New business uses the original stable onboarding + Guided Setup.
+- Existing business uses a dedicated Checkup + Business Intelligence flow.
+- Original onboarding's Already running option routes to the same dedicated Checkup.
+- Today has a secondary Existing Business Checkup entry without changing Today's main purpose.
+- Support Gateway retained.
+- Existing 4.5 tier simulator retained.
+- No 4.6/4.7 emergency event-handler patches were carried forward.
+
+No Cloudflare/backend was added.

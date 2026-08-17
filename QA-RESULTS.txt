@@ -1,127 +1,45 @@
-YASREADY ADMIN BUSINESS 360 — BUILD 5.3.1 FULL CLICK QA
-
+YASREADY CUSTOMER BUILD 4.8 — CLEAN REBUILD
 RESULT: PASS
 
-This build was tested in headless Chromium against the actual admin UI.
+This build was rebuilt from the earlier stable Customer 4.5.1 Support Gateway, not from the broken 4.7.x patch chain.
 
-Coverage includes:
-- Every top-level admin route
-- Every sidebar route
-- Desktop ↔ iPad Mode
-- Every iPad command dock route
-- Businesses search, entry-path filter, stage filter
-- Business row → Business 360
-- All 8 Business 360 tabs
-- Business tag toggle
-- Support thread selection, macro, reply, resolve
-- Customer row → Business 360
-- Subscription row → Business 360
-- Revenue mock retry / CSV control
-- Product Analytics
-- Customer Success
-- Feedback & Requests
-- System Health
-- Announcements
-- Operations
-- API Architecture
-- Settings role simulator
-- Global search
-- Embedded JavaScript syntax validation
+The existing-business product path was re-added with one controller and the original onboarding handler was modified once, in place.
 
-AUTOMATED RESULTS
-PASSES 94
-PASS: Route overview
-PASS: Route customers
-PASS: Route businesses
-PASS: Route revenue
-PASS: Route subscriptions
-PASS: Route support
-PASS: Route analytics
-PASS: Route success
-PASS: Route feedback
-PASS: Route health
-PASS: Route content
-PASS: Route operations
-PASS: Route architecture
-PASS: Route settings
-PASS: Sidebar exists overview
-PASS: Sidebar click overview
-PASS: Sidebar exists customers
-PASS: Sidebar click customers
-PASS: Sidebar exists businesses
-PASS: Sidebar click businesses
-PASS: Sidebar exists revenue
-PASS: Sidebar click revenue
-PASS: Sidebar exists subscriptions
-PASS: Sidebar click subscriptions
-PASS: Sidebar exists support
-PASS: Sidebar click support
-PASS: Sidebar exists analytics
-PASS: Sidebar click analytics
-PASS: Sidebar exists success
-PASS: Sidebar click success
-PASS: Sidebar exists feedback
-PASS: Sidebar click feedback
-PASS: Sidebar exists health
-PASS: Sidebar click health
-PASS: Sidebar exists content
-PASS: Sidebar click content
-PASS: Sidebar exists operations
-PASS: Sidebar click operations
-PASS: Sidebar exists architecture
-PASS: Sidebar click architecture
-PASS: Sidebar exists settings
-PASS: Sidebar click settings
-PASS: iPad Mode on
-PASS: iPad dock overview
-PASS: iPad dock support
-PASS: iPad dock businesses
-PASS: iPad dock revenue
-PASS: iPad dock success
-PASS: iPad dock operations
-PASS: iPad Mode off
-PASS: Business rows render
-PASS: Business search
-PASS: Path filter
-PASS: Stage filter
-PASS: Open Business 360
-PASS: 360 tab exists overview
-PASS: 360 tab click overview
-PASS: 360 tab exists lifecycle
-PASS: 360 tab click lifecycle
-PASS: 360 tab exists workspace
-PASS: 360 tab click workspace
-PASS: 360 tab exists kpis
-PASS: 360 tab click kpis
-PASS: 360 tab exists financials
-PASS: 360 tab click financials
-PASS: 360 tab exists activity
-PASS: 360 tab click activity
-PASS: 360 tab exists support
-PASS: 360 tab click support
-PASS: 360 tab exists subscription
-PASS: 360 tab click subscription
-PASS: Business tag toggle
-PASS: Support threads render
-PASS: Support thread click
-PASS: Support macro
-PASS: Send support reply
-PASS: Resolve support thread
-PASS: customers row opens 360
-PASS: subscriptions row opens 360
-PASS: Revenue mock retry
-PASS: Revenue CSV export button
-PASS: Admin section analytics
-PASS: Admin section success
-PASS: Admin section feedback
-PASS: Admin section health
-PASS: Admin section content
-PASS: Admin section operations
-PASS: Admin section architecture
-PASS: Role Owner
-PASS: Role Admin
-PASS: Role Support
-PASS: Role Read Only
-PASS: Role Owner
-PASS: Global search input
+AUTOMATED CLICK RESULTS
+PASSES 35
+PASS: Hero existing -> Existing Business Checkup
+PASS: Existing Checkup -> Business Intelligence
+PASS: Business Intelligence has business context
+PASS: Business Intelligence -> My Business
+PASS: Hero new -> onboarding
+PASS: Starting -> Guided Setup
+PASS: Guided Setup nonblank
+PASS: Guided Setup -> My Business
+PASS: Original Already running -> Existing Business Checkup
+PASS: Idea -> Guided Setup
+PASS: Today existing CTA exists
+PASS: Today existing CTA -> Checkup
+PASS: Tier selector exists free
+PASS: Tier selector exists run
+PASS: Tier selector exists connect
+PASS: Public route home
+PASS: Public route learn
+PASS: Public route freeTools
+PASS: Public route tools
+PASS: Public route supportCenter
+PASS: Public route contact
+PASS: Public route privacy
+PASS: Public route terms
+PASS: Public route disclaimer
+PASS: Started route today
+PASS: Started route saasHome
+PASS: Started route workspace
+PASS: Started route guidedSetup
+PASS: Started route runYasReady
+PASS: Started route financialModel
+PASS: Started route settings
+PASS: Started route founderLab
+PASS: Started route supportCenter
+PASS: Started route existingBusiness
+PASS: Started route businessIntelligence
 FAILURES 0
