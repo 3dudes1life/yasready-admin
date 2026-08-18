@@ -1,0 +1,10 @@
+window.YR_CLOUD_CONFIG=Object.assign({
+  apiBase:'https://api.yasready.com',
+  authBase:'https://auth.yasready.com',
+  businessUrl:'https://app.yasready.com',
+  studioUrl:'https://studio.yasready.com',
+  eventsUrl:'https://events.yasready.com',
+  adminUrl:'https://admin.yasready.com',
+  homeUrl:'https://yasready.com',
+  devEmail:'founder@local.test'
+},window.YR_CLOUD_CONFIG||{});

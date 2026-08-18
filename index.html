@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-yr-module="admin">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>YasReady Admin — Business 360</title>
@@ -209,7 +209,7 @@ body.ipadMode .ipadDock{padding-bottom:calc(10px + var(--safe-bottom))}
 @media(max-width:520px){.top{padding-left:12px;padding-right:12px}.brand{font-size:18px}#roleSelect{max-width:110px}.avatar{display:none}main{padding:14px}.metric strong{font-size:23px}}
 
 </style>
-</head>
+<script src="yasready-cloud-config.js"></script><script src="yasready-cloud-client.js"></script><script src="yasready-platform-shell.js"></script></head>
 <body><div class="app">
 <div id="offlineBanner" class="offlineBanner">Offline simulation active — AdminAPI is returning local mock data.</div><header class="top"><div class="brand"><span class="brandMark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M12 10h12l8 15 8-15h12L37 36v17H27V36z" fill="white"/><circle cx="50" cy="49" r="5.5" fill="#C6FF4A"/></svg></span><span>YasReady<span class="brandWordDot">.</span></span></div><div class="adminPill">ADMIN · BUSINESS 360 BUILD 5.2</div>
 <div class="topRight"><span class="adminModeBadge">QA STABLE</span><span class="ipadHint">IPAD COMMAND CENTER</span><button class="modeToggle" id="ipadModeToggle">iPad Mode</button><div class="globalSearch"><input id="globalSearchInput" placeholder="Search businesses, customers, support…  ⌘K"><span class="searchIcon">⌕</span></div><button class="notifyBtn" id="notifyBtn">🔔<span class="notifyDot"></span></button><select id="roleSelect" class="secondary btn"><option>Owner</option><option>Admin</option><option>Support</option><option>Read Only</option></select><div class="avatar">W</div></div></header>
