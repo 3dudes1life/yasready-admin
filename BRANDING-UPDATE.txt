@@ -1,14 +1,10 @@
-YASREADY CUSTOMER — BUILD 4.5 BRANDED FIXED
+ADMIN GITHUB — YasReady Admin / Business 360
+Branding-only update from Business 360 Build 5.2.
 
-DESTINATION: CUSTOMER GITHUB ONLY
+Applied YasReady brand direction #2:
+- YasReady. wordmark with Ready Lime period
+- Custom geometric Y + lime status dot app/favicon mark
+- Updated admin header branding
+- No AdminAPI simulation, support, Business 360, iPad mode, or admin functionality intentionally changed
 
-Regenerated from the original known-good customer Build 4.5.
-Only branding was changed:
-- custom Y + Ready Lime status dot
-- YasReady. wordmark
-- branded favicon
-- branded 404 identity
-
-No routes, tiers, data model, tools, onboarding, customer state, or SaaS functionality were intentionally changed.
-
-ADMIN GITHUB IS NOT PART OF THIS ZIP.
+KEEP THIS REPOSITORY 100% SEPARATE FROM CUSTOMER GITHUB.
