@@ -259,12 +259,12 @@ body.ipadMode .ipadDock{padding-bottom:calc(10px + var(--safe-bottom))}
 </style>
 <script src="yasready-cloud-config.js"></script><script src="yasready-cloud-client.js"></script><script src="yasready-platform-shell.js"></script></head>
 <body><div class="app">
-<div id="offlineBanner" class="offlineBanner">Offline simulation active — AdminAPI is returning local mock data.</div><header class="top"><div class="brand"><span class="brandMark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M12 10h12l8 15 8-15h12L37 36v17H27V36z" fill="white"/><circle cx="50" cy="49" r="5.5" fill="#C6FF4A"/></svg></span><span>YasReady<span class="brandWordDot">.</span></span></div><div class="adminPill">ADMIN · BUSINESS 360 BUILD 5.2</div>
+<div id="offlineBanner" class="offlineBanner">Offline simulation active — live YasReady data is unavailable.</div><header class="top"><div class="brand"><span class="brandMark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M12 10h12l8 15 8-15h12L37 36v17H27V36z" fill="white"/><circle cx="50" cy="49" r="5.5" fill="#C6FF4A"/></svg></span><span>YasReady<span class="brandWordDot">.</span></span></div><div class="adminPill">ADMIN · FOUNDING ALPHA U5</div>
 <div class="topRight"><span class="adminModeBadge">QA STABLE</span><span class="ipadHint">IPAD COMMAND CENTER</span><button class="modeToggle" id="ipadModeToggle">iPad Mode</button><div class="globalSearch"><input id="globalSearchInput" placeholder="Search businesses, customers, support…  ⌘K"><span class="searchIcon">⌕</span></div><button class="notifyBtn" id="notifyBtn">🔔<span class="notifyDot"></span></button><select id="roleSelect" class="secondary btn"><option>Owner</option><option>Admin</option><option>Support</option><option>Read Only</option></select><div class="avatar">W</div></div></header>
 <div id="notifyPanel" class="notifyPanel hidden"></div>
 <div id="commandBackdrop" class="commandBackdrop hidden"><div class="commandBox"><input id="commandInput" placeholder="Jump anywhere in YasReady Admin…"><div id="commandResults" class="commandResults"></div></div></div><div class="layout"><aside><div class="nav">
 <div class="navTitle">Command Center</div>
-<button data-view="overview" class="active">Overview</button><button data-view="customers">Customers <span class="count">128</span></button><button data-view="businesses">Businesses <span class="count">141</span></button>
+<button data-view="overview" class="active">Overview</button><button data-view="customers">Customers <span class="count">0</span></button><button data-view="businesses">Businesses <span class="count">0</span></button>
 <div class="navTitle">Money</div><button data-view="revenue">Revenue</button><button data-view="subscriptions">Subscriptions</button>
 <div class="navTitle">Customer Success</div><button data-view="support">Support Inbox <span class="count">4</span></button>
 <div class="navTitle">Intelligence</div><button data-view="analytics">Product Analytics</button><button data-view="success">Customer Success</button><button data-view="feedback">Feedback & Requests</button><button data-view="health">System Health</button>
@@ -273,21 +273,14 @@ body.ipadMode .ipadDock{padding-bottom:calc(10px + var(--safe-bottom))}
 <script>
 const money=n=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n);
 const plans={free:"Free",run:"$9.99 Run",connect:"$19.99 Connect"};
-const businesses=[
-{id:1,name:"YasReady",owner:"William Z.",email:"william@example.com",plan:"connect",ready:92,revenue:8200,goal:10000,last:"Today",status:"Active",customers:38,offers:3,kpis:9,google:"Connected",support:1,description:"Small-business launch and operating platform.",industry:"SaaS"},
-{id:2,name:"Maya Makes Studio",owner:"Maya Chen",email:"maya@example.com",plan:"run",ready:81,revenue:4600,goal:6000,last:"Today",status:"Active",customers:24,offers:5,kpis:7,google:"Not included",support:0,description:"Custom illustration and creative services.",industry:"Creative"},
-{id:3,name:"Northside Mobile Detail",owner:"Andre Lewis",email:"andre@example.com",plan:"run",ready:74,revenue:7100,goal:8000,last:"Yesterday",status:"Active",customers:31,offers:4,kpis:6,google:"Not included",support:1,description:"Mobile automotive detailing.",industry:"Services"},
-{id:4,name:"Sunday Bloom Co.",owner:"Rina Patel",email:"rina@example.com",plan:"free",ready:56,revenue:0,goal:3500,last:"2 days ago",status:"Active",customers:0,offers:2,kpis:3,google:"Locked",support:1,description:"Local floral arrangements and events.",industry:"Retail"},
-{id:5,name:"Trailhead Bookkeeping",owner:"Jordan Kim",email:"jordan@example.com",plan:"connect",ready:96,revenue:12800,goal:12000,last:"Today",status:"Active",customers:19,offers:3,kpis:10,google:"Connected",support:0,description:"Bookkeeping for independent businesses.",industry:"Finance"},
-{id:6,name:"Glow Reiki",owner:"Daniel C.",email:"daniel@example.com",plan:"free",ready:68,revenue:1250,goal:3000,last:"5 days ago",status:"Active",customers:8,offers:2,kpis:4,google:"Locked",support:1,description:"Reiki sessions and wellness services.",industry:"Wellness"}
-];
+const businesses=[];
 const threads=[
 {id:1,biz:1,name:"William · YasReady",subject:"Why is my gross margin different?",status:"New",time:"8m",messages:[["customer","My gross margin looks different than the number I expected. Can you tell me what YasReady is using?"],["admin","Absolutely — I can see the pricing and direct-cost inputs attached to this business. I’m checking the calculation with you."]]},
-{id:2,biz:3,name:"Andre · Northside Mobile Detail",subject:"Revenue goal question",status:"Waiting on us",time:"31m",messages:[["customer","Should my monthly revenue goal include tips?" ]]},
-{id:3,biz:4,name:"Rina · Sunday Bloom Co.",subject:"Where do I add delivery cost?",status:"New",time:"1h",messages:[["customer","I charge delivery sometimes. Is that an expense or part of the offer?"]]},
-{id:4,biz:6,name:"Daniel · Glow Reiki",subject:"Can I change my launch date?",status:"Waiting on us",time:"3h",messages:[["customer","I need to move the launch date. Where do I edit it?"]]}
+{id:2,biz:3,name:"Andre · ",subject:"Revenue goal question",status:"Waiting on us",time:"31m",messages:[["customer","Should my monthly revenue goal include tips?" ]]},
+{id:3,biz:4,name:"Rina ·  Co.",subject:"Where do I add delivery cost?",status:"New",time:"1h",messages:[["customer","I charge delivery sometimes. Is that an expense or part of the offer?"]]},
+{id:4,biz:6,name:"Daniel · ",subject:"Can I change my launch date?",status:"Waiting on us",time:"3h",messages:[["customer","I need to move the launch date. Where do I edit it?"]]}
 ];
-const events=["Maya completed monthly check-in","Trailhead Bookkeeping upgraded to Connect","Andre opened KPI Levers","Sunday Bloom completed Offer + Price","YasReady logged a business win"];
+const events=[];
 let current="overview", selectedBiz=businesses[0], selectedThread=threads[0];
 
 const adminState=JSON.parse(localStorage.getItem("yasready_admin_b360_build2")||'{"notes":{},"tags":{},"tasks":[],"flags":{"googleConnectPreview":true,"founderTierSimulator":true,"supportChat":true,"excelExport":true},"audit":[]}');
@@ -304,11 +297,11 @@ let apiState={latency:120,failNext:false,offline:false};
 
 const AdminAPI={
   async wait(){if(apiState.offline)throw new Error("OFFLINE");await new Promise(r=>setTimeout(r,apiState.latency));if(apiState.failNext){apiState.failNext=false;throw new Error("SIMULATED_API_FAILURE")}},
-  async getOverview(){await this.wait();return {mrr:1184,businesses:141,accounts:128,paidConversion:31.3,needsAttention:7}},
-  async getBusinesses(){await this.wait();return structuredClone(businesses)},
+  async getOverview(){await this.wait();try{return await YasReadyCloud.api('/v1/admin/overview')}catch{return {mrr:null,businesses:0,accounts:0,workspaces:0,paidConversion:null,needsAttention:0}}},
+  async getBusinesses(){await this.wait();try{const d=await YasReadyCloud.api('/v1/admin/businesses');return d.items||[]}catch{return []}},
   async getBusiness360(id){await this.wait();const b=businesses.find(x=>x.id==id);if(!b)throw new Error("NOT_FOUND");return structuredClone(b)},
   async getCustomers(){await this.wait();return structuredClone(businesses)},
-  async getRevenue(){await this.wait();return {mrr:1184,arr:14208,arpu:29.60,failed:39.98,transactions:[["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"],["Aug 15","Northside Mobile Detail","Run renewal",9.99,"Paid"],["Aug 15","Glow Reiki","Upgrade attempt",9.99,"Failed"]]}},
+  async getRevenue(){await this.wait();return {mrr:null,arr:null,arpu:null,failed:null,transactions:[]}},
   async getSubscriptions(){await this.wait();return {free:88,run:24,connect:16,churn:2.1}},
   async getSupportThreads(){await this.wait();return structuredClone(threads)},
   async sendSupportReply(threadId,text){await this.wait();const t=threads.find(x=>x.id==threadId);if(!t)throw new Error("NOT_FOUND");t.messages.push(["admin",text]);t.status="Waiting on customer";return structuredClone(t)},
@@ -332,36 +325,23 @@ function renderEmpty(title,copy,actionLabel="",actionView="overview"){return `<d
 
 adminState.savedViews=adminState.savedViews||["All Businesses","Churn Risk","Connect Ready","Needs Follow-up"];
 adminState.announcements=adminState.announcements||[];
-adminState.feedback=adminState.feedback||[
-{id:"f1",type:"Feature",title:"Google Sheets two-way sync",votes:18,status:"Planned"},
-{id:"f2",type:"UX",title:"Simpler monthly check-in labels",votes:11,status:"Reviewing"},
-{id:"f3",type:"Feature",title:"Client invoices inside YasReady",votes:9,status:"Backlog"},
-{id:"f4",type:"Bug",title:"Clarify CAC when customers = 0",votes:7,status:"Reviewing"}
-];
+adminState.feedback=adminState.feedback||[];
 
-adminState.supportMacros=adminState.supportMacros||[
-{id:"m1",name:"Context-first reply",text:"Thanks for reaching out — I’m looking at your YasReady business context now so you don’t have to repeat everything."},
-{id:"m2",name:"Pricing clarification",text:"I can see the pricing inputs attached to your business. Let’s walk through exactly what YasReady is using in the calculation."},
-{id:"m3",name:"Monthly check-in help",text:"Your monthly check-in feeds the same actuals used by your Financial Model, so we’ll fix it in one place and YasReady will reuse it everywhere."}
-];
-adminState.releases=adminState.releases||[
-{id:"r1",name:"Customer 4.5",channel:"Customer Web",status:"Frozen"},
-{id:"r2",name:"Business 360 Build 4",channel:"Admin Web",status:"Testing"},
-{id:"r3",name:"iOS Beta",channel:"iOS",status:"Not started"},
-{id:"r4",name:"Android Beta",channel:"Android",status:"Not started"}
-];
-adminState.dunning=adminState.dunning||[
-{business:"Glow Reiki",amount:9.99,attempt:1,status:"Retry tomorrow"},
-{business:"Studio North",amount:19.99,attempt:2,status:"Card update needed"}
-];
+adminState.supportMacros=adminState.supportMacros||[];
+adminState.releases=adminState.releases||[];
+adminState.dunning=adminState.dunning||[];
 function audit(action,detail=""){adminState.audit.unshift({at:new Date().toISOString(),actor:document.getElementById("roleSelect")?.value||"Owner",action,detail});adminState.audit=adminState.audit.slice(0,100);saveAdmin()}
 function csvDownload(name,rows){const esc=v=>`"${String(v??"").replace(/"/g,'""')}"`;const csv=rows.map(r=>r.map(esc).join(",")).join("\n");const blob=new Blob([csv],{type:"text/csv"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),400)}
 
 const content=document.getElementById("content");
 function metric(label,value,small=""){return `<div class="metric"><span>${label}</span><strong>${value}</strong><small>${small}</small></div>`}
 function tableBiz(rows=businesses){return `<div class="tableWrap"><table class="table"><thead><tr><th>Business</th><th>Owner</th><th>Plan</th><th>Readiness</th><th>Revenue</th><th>Goal</th><th>Last active</th></tr></thead><tbody>${rows.map(b=>`<tr class="clickrow" data-biz="${b.id}"><td><strong>${b.name}</strong><br><small>${b.industry}</small></td><td>${b.owner}</td><td><span class="pill ${b.plan==="free"?"free":""}">${plans[b.plan]}</span></td><td>${b.ready}%</td><td>${money(b.revenue)}</td><td>${money(b.goal)}</td><td>${b.last}</td></tr>`).join("")}</tbody></table></div>`}
+async function hydrateRealOverview(){
+ const box=document.getElementById('realOverviewMetrics');if(!box||!window.YasReadyCloud)return;
+ try{const d=await YasReadyCloud.api('/v1/admin/overview');box.innerHTML=metric("MRR","—","Billing not connected yet")+metric("Businesses",String(d.businesses||0),String(d.workspaces||0)+" module workspaces")+metric("Accounts",String(d.accounts||0),"Real Founding Alpha users")+metric("Needs attention",String(d.needsAttention||0),"Open tester reports");}catch(e){console.warn("Real overview unavailable",e)}
+}
 function overview(){content.innerHTML=`<span class="eyebrow">YasReady Command Center</span><h1>Run the company.</h1><p class="sub">Customers, businesses, money, support, product usage, retention signals, and anything that needs attention.</p>
-<div class="grid4">${metric("MRR","$1,184","+12.4% this month")}${metric("Businesses","141","128 customer accounts")}${metric("Paid conversion","31.3%","Free → paid")}${metric("Needs attention","7","4 support · 3 billing")}</div>
+<div class="grid4" id="realOverviewMetrics">${metric("MRR","—","Billing not connected yet")}${metric("Businesses","0","Real businesses only")}${metric("Accounts","0","Founding Alpha users")}${metric("Needs attention","0","Open tester reports")}</div>
 <div class="sectionHead"><h2>Operations pulse</h2><button class="btn secondary" data-jump="operations">Open Operations</button></div>
 <div class="opsGrid"><div class="opsCard"><span>Support SLA</span><strong>18m</strong></div><div class="opsCard"><span>Failed payments</span><strong>2</strong></div><div class="opsCard"><span>Admin tasks open</span><strong>${adminState.tasks.filter(t=>!t.done).length}</strong></div><div class="opsCard"><span>Release status</span><strong>Testing</strong></div></div>
 <div class="sectionHead"><h2>Customer health</h2><button class="btn secondary" data-jump="success">Open Customer Success</button></div>
@@ -398,9 +378,7 @@ support:`<section class="card"><h2>Support history</h2><p class="sub">${b.suppor
 subscription:`<div class="grid2"><section class="card"><h2>${plans[b.plan]}</h2><div class="list"><div class="row"><strong>Status</strong><span class="pill good">Active</span></div><div class="row"><strong>Next billing</strong><span>Sep 16 (mock)</span></div><div class="row"><strong>Google status</strong><span>${b.google}</span></div></div></section><section class="card"><h2>Admin actions</h2><div class="toolbar"><button class="btn secondary" onclick="audit('Mock plan override','${b.name}')">Override plan</button><button class="btn secondary" onclick="audit('Mock billing retry','${b.name}')">Retry payment</button><button class="btn secondary" onclick="audit('Mock courtesy credit','${b.name}')">Add courtesy credit</button></div><p class="sub">These are workflow placeholders only until billing is real.</p></section></div>`
 };
 document.getElementById("b360Panel").innerHTML=panels[tab]||panels.overview;bindJumps();const s=document.getElementById("saveInternalNote");if(s)s.onclick=()=>{adminState.notes[b.id]=document.getElementById("internalNote").value;saveAdmin();audit("Saved internal note",b.name);s.textContent="Saved ✓";setTimeout(()=>s.textContent="Save note",900)}}
-function revenue(){content.innerHTML=`<span class="eyebrow">Revenue</span><h1>Money flow.</h1><p class="sub">Mock financial command center now; later this reconciles Stripe + plan events through the shared backend.</p><div class="grid4">${metric("MRR","$1,184","+12.4%")}${metric("ARR","$14,208","Run-rate")}${metric("ARPU","$29.60","Paid accounts")}${metric("Failed","$39.98","2 payments")}</div><div class="grid2"><section class="card"><h2>Plan revenue</h2><div class="list"><div class="row"><strong>Run YasReady</strong><span>$619/mo</span></div><div class="row"><strong>Connect YasReady</strong><span>$565/mo</span></div></div></section><section class="card"><h2>Growth</h2><div class="bar"><label>Free → paid</label><div class="track"><i style="width:31%"></i></div><strong>31%</strong></div><div class="bar"><label>Run → Connect</label><div class="track"><i style="width:22%"></i></div><strong>22%</strong></div></section></div>
-<div class="sectionHead"><h2>Failed-payment recovery</h2></div><section class="card"><div class="dunningList">${adminState.dunning.map(d=>`<div class="dunningRow"><div><strong>${d.business}</strong><span>${money(d.amount)} · ${d.status}</span></div><span class="attempt">Attempt ${d.attempt}</span><button class="btn secondary" data-retry="${d.business}">Mock retry</button></div>`).join("")}</div></section>
-<div class="sectionHead"><h2>Recent transactions</h2><button class="btn secondary" id="exportRevenue" data-requires="export">Export CSV</button></div><div class="tableWrap"><table class="table"><thead><tr><th>Date</th><th>Business</th><th>Event</th><th>Amount</th><th>Status</th></tr></thead><tbody>${[["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"],["Aug 15","Northside Mobile Detail","Run renewal",9.99,"Paid"],["Aug 15","Glow Reiki","Upgrade attempt",9.99,"Failed"]].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>$${r[3].toFixed(2)}</td><td><span class="pill ${r[4]==="Paid"?"good":"bad"}">${r[4]}</span></td></tr>`).join("")}</tbody></table></div>`;document.getElementById("exportRevenue").onclick=()=>{csvDownload("yasready-revenue.csv",[["Date","Business","Event","Amount","Status"],["Aug 16","Trailhead Bookkeeping","Connect renewal",19.99,"Paid"],["Aug 16","Maya Makes Studio","Run renewal",9.99,"Paid"]]);audit("Exported revenue CSV")};document.querySelectorAll("[data-retry]").forEach(x=>x.onclick=()=>{const d=adminState.dunning.find(v=>v.business===x.dataset.retry);d.attempt++;d.status="Retry queued";saveAdmin();audit("Queued payment retry",d.business);revenue()})}
+function revenue(){content.innerHTML=`<span class="eyebrow">Revenue</span><h1>Money flow.</h1><p class="sub">Billing is not connected yet. YasReady will not invent financial data.</p><div class="grid4">${metric("MRR","—","Billing not connected")}${metric("ARR","—","Billing not connected")}${metric("ARPU","—","Billing not connected")}${metric("Failed","0","No real billing feed")}</div><section class="card" style="margin-top:14px"><div class="statePanel"><b>No billing data yet.</b><br>When real plan billing is connected, actual transactions and plan revenue will appear here.</div></section>`;}
 function subscriptions(){content.innerHTML=`<span class="eyebrow">Subscriptions</span><h1>Plans & billing.</h1><div class="grid4">${metric("Free","88","68.7%")}${metric("$9.99 Run","24","18.8%")}${metric("$19.99 Connect","16","12.5%")}${metric("Churn","2.1%","Mock 30d")}</div>${tableBiz()}`;bindRows()}
 function support(){
 if(!threads.length){
@@ -426,7 +404,7 @@ function analytics(){content.innerHTML=`<span class="eyebrow">Product Intelligen
 function success(){content.innerHTML=`<span class="eyebrow">Customer Success</span><h1>Keep good businesses moving.</h1><p class="sub">Health, lifecycle, retention risk, expansion opportunity, and proactive follow-up before a customer has to ask for help.</p>
 <div class="grid4">${metric("Healthy","91","71% of accounts")}${metric("Watch","25","Needs attention")}${metric("At risk","12","Low activity / stalled")}${metric("Expansion ready","8","Run → Connect")}</div>
 <div class="sectionHead"><h2>Lifecycle</h2></div><div class="lifecycle">${[["New",18],["Activated",42],["Running",49],["Power user",13],["At risk",12]].map(x=>`<div class="stage"><span>${x[0]}</span><strong>${x[1]}</strong><small>accounts</small></div>`).join("")}</div>
-<div class="grid2" style="margin-top:14px"><section class="card"><h2>Proactive outreach queue</h2><div class="list"><div class="row"><strong>Sunday Bloom Co.</strong><span class="pill warn">Setup stalled</span></div><div class="row"><strong>Glow Reiki</strong><span class="pill bad">Payment + inactivity</span></div><div class="row"><strong>Maya Makes Studio</strong><span class="pill">Connect ready</span></div><div class="row"><strong>Northside Mobile Detail</strong><span class="pill warn">Missed monthly check-in</span></div></div></section>
+<div class="grid2" style="margin-top:14px"><section class="card"><h2>Proactive outreach queue</h2><div class="list"><div class="row"><strong> Co.</strong><span class="pill warn">Setup stalled</span></div><div class="row"><strong></strong><span class="pill bad">Payment + inactivity</span></div><div class="row"><strong></strong><span class="pill">Connect ready</span></div><div class="row"><strong></strong><span class="pill warn">Missed monthly check-in</span></div></div></section>
 <section class="card"><h2>Success playbooks</h2><div class="list"><div class="row"><strong>New user hasn't priced offer in 3 days</strong><span>Guide to Price It</span></div><div class="row"><strong>Run user exports Excel 3×</strong><span>Suggest Connect</span></div><div class="row"><strong>Paid user inactive 14 days</strong><span>Retention outreach</span></div><div class="row"><strong>Readiness reaches 90%</strong><span>Celebrate + next goal</span></div></div></section></div>
 <div class="sectionHead"><h2>Business health queue</h2></div>${tableBiz([...businesses].sort((a,b)=>a.ready-b.ready))}`;bindRows()}
 
@@ -677,4 +655,7 @@ async function navigate(v){
 }
 setApiMode(apiMode);document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>navigate(b.dataset.view));document.getElementById("roleSelect").onchange=e=>{document.body.dataset.role=e.target.value;alert("Role simulator: "+e.target.value+"\\nReal permissions will be enforced by the backend later.")};navigate("overview");
 </script><script src="yasready-alpha-reporter.js"></script>
-<script src="yasready-alpha-qa.js"></script></body></html>
+<script src="yasready-alpha-qa.js"></script><script>
+document.addEventListener('click',()=>setTimeout(()=>{if(document.getElementById('realOverviewMetrics'))hydrateRealOverview()},40));
+window.addEventListener('yasready:platform-ready',()=>setTimeout(()=>{if(document.getElementById('realOverviewMetrics'))hydrateRealOverview()},120));
+</script></body></html>
