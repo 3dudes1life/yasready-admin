@@ -614,4 +614,17 @@ async function navigate(v){
  bindJumps();setTimeout(()=>{enforceRoleUI();hardenRoleUI()},0)
 }
 setApiMode(apiMode);document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>navigate(b.dataset.view));document.getElementById("roleSelect").onchange=e=>{document.body.dataset.role=e.target.value;alert("Role simulator: "+e.target.value+"\\nReal permissions will be enforced by the backend later.")};navigate("overview");
-</script></body></html>
+</script><script src="yasready-alpha-reporter.js"></script>
+<section id="yrAlphaFeedbackPanel" style="margin:22px auto;max-width:1180px;padding:0 18px">
+  <div style="display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:10px"><div><div style="font-size:11px;font-weight:900;color:#6e5aff;text-transform:uppercase;letter-spacing:.08em">Founding Alpha</div><h2 style="margin:4px 0">Tester feedback</h2><p style="margin:0;color:#77777f;font-size:13px">Real reports from Business, Studio, Events and Admin.</p></div><button id="yrRefreshFeedback" style="border:1px solid #dddde2;border-radius:10px;background:#fff;padding:9px 11px;font-weight:800">Refresh</button></div>
+  <div id="yrFeedbackList" style="display:grid;gap:8px"></div>
+</section>
+<script>
+(async function(){
+ const list=document.getElementById('yrFeedbackList'); if(!list||!window.YasReadyCloud)return;
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ async function load(){list.innerHTML='<div style="padding:15px;background:#fafafa;border-radius:14px">Loading feedback…</div>';try{const d=await YasReadyCloud.api('/v1/alpha-feedback');list.innerHTML=(d.items||[]).length?(d.items||[]).map(x=>`<article style="padding:14px;border:1px solid #e5e5e9;border-radius:14px;background:#fff"><div style="display:flex;justify-content:space-between;gap:10px"><div><b>${esc(x.product)} · ${esc(x.category)}</b><div style="font-size:11px;color:#77777f;margin-top:3px">${esc(x.displayName||x.email)} · ${esc(x.businessName||'No business')} · ${new Date(x.created_at).toLocaleString()}</div></div><select data-fb="${esc(x.id)}" style="height:34px;border:1px solid #dddde2;border-radius:9px"><option ${x.status==='new'?'selected':''}>new</option><option ${x.status==='reviewing'?'selected':''}>reviewing</option><option ${x.status==='fixed'?'selected':''}>fixed</option><option ${x.status==='closed'?'selected':''}>closed</option></select></div><p style="white-space:pre-wrap;margin:11px 0 6px">${esc(x.message)}</p><a href="${esc(x.page_url)}" style="font-size:11px;color:#6e5aff">Open reported page</a></article>`).join(''):'<div style="padding:15px;border:1px dashed #dddde2;border-radius:14px;color:#77777f">No alpha feedback yet.</div>';list.querySelectorAll('[data-fb]').forEach(s=>s.onchange=()=>YasReadyCloud.api('/v1/alpha-feedback/'+encodeURIComponent(s.dataset.fb),{method:'PATCH',body:{status:s.value}}));}catch(e){list.innerHTML='<div style="padding:15px;background:#fff1f1;border-radius:14px;color:#9d263c">Could not load feedback: '+esc(e.message)+'</div>'}}
+ document.getElementById('yrRefreshFeedback').onclick=load;window.addEventListener('yasready:platform-ready',load,{once:true});setTimeout(load,500);
+})();
+</script>
+<script src="yasready-alpha-qa.js"></script></body></html>
