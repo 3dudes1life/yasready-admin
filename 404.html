@@ -24,7 +24,8 @@ main{padding:30px;max-width:1500px;width:100%;margin:auto}.eyebrow{font-size:10p
 @media(max-width:1050px){.grid4{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:1fr 1fr}.layout{grid-template-columns:190px 1fr}.inbox{grid-template-columns:280px 1fr}}
 @media(max-width:760px){.layout{display:block}aside{display:none}.mobileMenu{display:block}.grid4,.grid3,.grid2{grid-template-columns:1fr}main{padding:20px}.inbox{grid-template-columns:1fr}.threads{border-right:0;max-height:260px}.search input{min-width:0}.heroTop{display:block}.top .adminPill{display:none}}
 </style>
-<script src="yasready-cloud-config.js"></script><script src="yasready-cloud-client.js"></script><script src="yasready-platform-shell.js"></script></head>
+<script src="yasready-cloud-config.js"></script><script src="yasready-cloud-client.js"></script><script src="yasready-platform-shell.js"></script><link rel="stylesheet" href="yasready-guided-setup.css?v=6.0">
+</head>
 <body><div class="app">
 <header class="top"><div class="brand">YasReady<span>.</span></div><div class="adminPill">ADMIN · BUSINESS 360 BUILD 1</div>
 <div class="topRight"><select id="roleSelect" class="secondary btn"><option>Owner</option><option>Admin</option><option>Support</option><option>Read Only</option></select><div class="avatar">W</div></div></header>
@@ -83,4 +84,5 @@ function bindRows(){document.querySelectorAll("[data-biz]").forEach(r=>r.onclick
 function bindJumps(){document.querySelectorAll("[data-jump]").forEach(b=>b.onclick=()=>navigate(b.dataset.jump))}
 function navigate(v){current=v;document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===v));({overview,customers,businesses:businessesView,revenue,subscriptions,support,analytics,health,settings}[v]||overview)();bindJumps()}
 document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>navigate(b.dataset.view));document.getElementById("roleSelect").onchange=e=>{document.body.dataset.role=e.target.value;alert("Role simulator: "+e.target.value+"\\nReal permissions will be enforced by the backend later.")};navigate("overview");
-</script><script src="yasready-alpha-reporter.js"></script><script src="yasready-alpha-qa.js"></script></body></html>
+</script><script src="yasready-alpha-reporter.js"></script><script src="yasready-alpha-qa.js"></script><script src="yasready-guided-setup.js?v=6.0"></script>
+</body></html>

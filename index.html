@@ -257,7 +257,8 @@ body.ipadMode .ipadDock{padding-bottom:calc(10px + var(--safe-bottom))}
   .yrLiveFeedbackActions{justify-content:flex-start;margin-top:9px}
 }
 </style>
-<script src="yasready-cloud-config.js"></script><script src="yasready-cloud-client.js"></script><script src="yasready-platform-shell.js"></script></head>
+<script src="yasready-cloud-config.js"></script><script src="yasready-cloud-client.js"></script><script src="yasready-platform-shell.js"></script><link rel="stylesheet" href="yasready-guided-setup.css?v=6.0">
+</head>
 <body><div class="app">
 <div id="offlineBanner" class="offlineBanner">Offline simulation active — live YasReady data is unavailable.</div><header class="top"><div class="brand"><span class="brandMark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M12 10h12l8 15 8-15h12L37 36v17H27V36z" fill="white"/><circle cx="50" cy="49" r="5.5" fill="#C6FF4A"/></svg></span><span>YasReady<span class="brandWordDot">.</span></span></div><div class="adminPill">ADMIN · FOUNDING ALPHA U5</div>
 <div class="topRight"><span class="adminModeBadge">QA STABLE</span><span class="ipadHint">IPAD COMMAND CENTER</span><button class="modeToggle" id="ipadModeToggle">iPad Mode</button><div class="globalSearch"><input id="globalSearchInput" placeholder="Search businesses, customers, support…  ⌘K"><span class="searchIcon">⌕</span></div><button class="notifyBtn" id="notifyBtn">🔔<span class="notifyDot"></span></button><select id="roleSelect" class="secondary btn"><option>Owner</option><option>Admin</option><option>Support</option><option>Read Only</option></select><div class="avatar">W</div></div></header>
@@ -658,4 +659,5 @@ setApiMode(apiMode);document.querySelectorAll("[data-view]").forEach(b=>b.onclic
 <script src="yasready-alpha-qa.js"></script><script>
 document.addEventListener('click',()=>setTimeout(()=>{if(document.getElementById('realOverviewMetrics'))hydrateRealOverview()},40));
 window.addEventListener('yasready:platform-ready',()=>setTimeout(()=>{if(document.getElementById('realOverviewMetrics'))hydrateRealOverview()},120));
-</script></body></html>
+</script><script src="yasready-guided-setup.js?v=6.0"></script>
+</body></html>
